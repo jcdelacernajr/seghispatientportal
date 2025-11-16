@@ -1,6 +1,6 @@
 <x-layouts.app title="Dashboard">
 
-    <h2>Welcome, {{ auth()->user()->name }}!</h2>
+    <h2>Welcome</h2>
     <p>Your email: {{ auth()->user()->email }}</p>
 
     <section id="core-functionalities">
