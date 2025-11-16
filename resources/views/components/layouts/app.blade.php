@@ -22,6 +22,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('profile-management') }}">Profile Management</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('medical-records') }}">Medical Records</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('appointments') }}">Appointments</a></li>
                 </ul>
