@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\MedicalRecords;
+use App\Http\Controllers\MedicalRecordsController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,5 +38,8 @@ Route::middleware('guest')->group(function () {
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
+    Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
 });
