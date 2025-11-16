@@ -8,6 +8,6 @@ class MedicalRecordsController extends Controller
 {
     public function index()
     {
-        return view('app.medicalrecords');
+        return view('app.medical_records');
     }
 }

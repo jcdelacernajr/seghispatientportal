@@ -8,7 +8,7 @@ class ProfileManagementController extends Controller
 {
       public function index()
     {
-        return view('app.profilemanagement');
+        return view('app.profile_management');
     }
 
 }
