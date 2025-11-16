@@ -28,4 +28,9 @@ class ProfileController extends Controller
         // Return JSON response for AJAX
         return response()->json(['message' => 'Profile updated successfully!']);
     }
+
+    public function edit()
+    {
+       
+    }
 }

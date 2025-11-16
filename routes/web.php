@@ -8,6 +8,7 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\MedicalRecords;
 use App\Http\Controllers\MedicalRecordsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,9 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
     Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
 
+    Route::get('/profile-management', [ProfileManagementController::class, 'index'])->name('profile-management');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+    // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
 });
