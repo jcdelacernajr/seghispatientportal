@@ -1,13 +1,6 @@
 /**
  * Reusable DataTable Loader using Axios
- *
- * Usage:
- * loadDataTable('#profilePatientTable', '/api/url', [
- *   { data: 'id', name: 'id' },
- *   ...
- * ]);
  */
-
 function loadDataTable(tableSelector, ajaxUrl, columns) {
     return $(tableSelector).DataTable({
         processing: true,

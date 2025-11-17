@@ -3,7 +3,7 @@
     <h2 class="mb-4">Profile Patient Management</h2>
     <!-- Button to trigger modal -->
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addProfileModal">
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProfileModal">
             Add User
         </button>
     </div>
