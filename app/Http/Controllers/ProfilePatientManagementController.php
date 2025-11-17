@@ -155,17 +155,11 @@ class ProfilePatientManagementController extends Controller
 
     public function list()
     {
-        // Get users who have 'patient' role, including patient info
-        //$users = User::whereHas('roles', function ($query) {
-        //    $query->where('name', 'patient');
-        //})->with('patient', 'roles');
-
         $users = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['patient', 'doctor']);
         })
-            ->with('roles')
-            ->orderBy('id', 'desc')
-            ->get();
+        ->with('roles')
+        ->orderBy('id', 'desc');
 
         return DataTables::of($users)
             ->addColumn('name', function ($user) {
@@ -189,6 +183,17 @@ class ProfilePatientManagementController extends Controller
                         Delete
                     </button>
                 ';
+            })
+            ->filter(function ($query) {
+                if ($search = request('search')['value'] ?? false) {
+                    $query->where(function ($q) use ($search) {
+                        $q->whereHas('patient', function ($q2) use ($search) {
+                            $q2->where('name', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%");
+                        })
+                        ->orWhere('email', 'like', "%{$search}%");
+                    });
+                }
             })
             ->rawColumns(['action'])
             ->make(true);
