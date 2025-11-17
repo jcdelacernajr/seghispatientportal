@@ -4,7 +4,7 @@
     <p>Your email: {{ auth()->user()->email }}</p>
 
     <section id="core-functionalities">
-        <h2>Core Functionalities</h2>
+        <h2>Upcoming Appointments</h2>
         <ul>
             <li>User Authentication</li>
             <li>Dashboard Overview</li>
@@ -16,7 +16,7 @@
     </section>
 
     <section id="prototype-features" class="mt-5">
-        <h2>Prototype Features</h2>
+        <h2>Notifications</h2>
         <ul>
             <li>Complete CRUD operations using AJAX</li>
             <li>Smooth navigation flow between sections</li>

@@ -8,7 +8,7 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\MedicalRecords;
 use App\Http\Controllers\MedicalRecordsController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\ProfilePatientManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,15 +38,26 @@ Route::middleware('guest')->group(function () {
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
+    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
+    Route::get('/medical-records/list', [MedicalRecordsController::class, 'list'])->name('medical-records.list');
+
     Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
-
-    Route::get('/profile-management', [ProfileManagementController::class, 'index'])->name('profile-management');
-
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
+
+     // Profile-management only for admin and doctor
+    Route::middleware('role:admin,doctor')->group(function () {
+        Route::get('/profile-patient-management', [ProfilePatientManagementController::class, 'index'])->name('profile-patient-management');
+        Route::post('profile-patient-management/store', [ProfilePatientManagementController::class, 'store'])->name('profile-patient-management.store');
+        Route::post('profile-patient-management/update', [ProfilePatientManagementController::class, 'update'])->name('profile-patient-management.update');
+        Route::delete('profile-patient-management/delete/{id}', [ProfilePatientManagementController::class, 'delete'])->name('profile-patient-management.delete');
+        Route::get('profile-patient-management/patient/{id}', [ProfilePatientManagementController::class, 'patient'])->name('profile-patient-management.patient');
+        Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
+    });
+    
 });

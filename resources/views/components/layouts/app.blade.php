@@ -22,7 +22,14 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('profile-management') }}">Profile Management</a></li>
+                    @if(auth()->check() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('doctor')))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile-patient-management') }}">
+                                Profile Patient Management
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="nav-item"><a class="nav-link" href="{{ route('medical-records') }}">Medical Records</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('appointments') }}">Appointments</a></li>
                 </ul>
@@ -61,6 +68,12 @@
         {{ $slot }}
     </div>
 
+    <script src="{{ asset('js/datatable-loader.js') }}"></script>
+    <script src="{{ asset('js/form.js') }}"></script>
+    <script src="{{ asset('js/delete-row-handler.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- Scripts stack --}}
+    @stack('scripts')
 </body>
 </html>
