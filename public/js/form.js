@@ -26,7 +26,8 @@ function ajaxFormSubmit(formSelector, url, onSuccess, onError = null) {
             })
             .catch(error => {
                 if (typeof onError === "function") {
-                    onError(error);
+                    const errorMsg = error.response?.data?.error || "An error occurred.";
+                    onError(errorMsg);
                 } else {
                     alert(
                         error.response?.data?.message ||

@@ -28,9 +28,17 @@ document.addEventListener("DOMContentLoaded", function () {
         "#addProfileForm",
         profilePatientRoutes.store,
         function (response) {
-            document.getElementById('successMsg').classList.remove('d-none');
-            document.getElementById('successMsg').innerText = response.message;
+            const msgDiv = document.getElementById('responseSuccessMsg');
+            msgDiv.classList.remove('d-none', 'alert-danger');
+            msgDiv.classList.add('alert-success');
+            msgDiv.innerText = response.message;
             table.ajax.reload();
+        },
+        function (errorMsg) {  
+            const msgDiv = document.getElementById('responseSuccessMsg');
+            msgDiv.classList.remove('d-none', 'alert-success');
+            msgDiv.classList.add('alert-danger');
+            msgDiv.innerText = errorMsg;
         }
     );
 });

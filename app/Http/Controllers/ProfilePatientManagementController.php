@@ -84,7 +84,7 @@ class ProfilePatientManagementController extends Controller
             })
             ->addColumn('action', function ($user) {
                 return '
-                    <button class="btn btn-sm btn-primary editUser" data-id="' . $user->id . '">
+                    <button class="btn btn-sm btn-primary editUser" data-bs-toggle="modal" data-bs-target="#editProfileModal" data-id="' . $user->id . '">
                         Edit
                     </button>
                     <button class="btn btn-sm btn-danger deleteUser" data-id="' . $user->id . '">

@@ -24,7 +24,7 @@
     </table>
 
     <!-- Modal -->
-    <!-- Add User Form -->
+    <!-- Add Form -->
     <form id="addProfileForm">
         <div class="modal fade" id="addProfileModal" tabindex="-1" aria-labelledby="addProfileModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-m">
@@ -36,7 +36,62 @@
                     <div class="modal-body">
                         
                     <!-- Success Message -->
-                    <div id="successMsg" class="alert alert-success d-none"></div>
+                    <div id="responseSuccessMsg" class="alert d-none"></div>
+                        @csrf
+                        <div class="col-md mb-3">
+                            <select name="role_id" class="form-control" required>
+                                <option value="">Select Role</option>
+                                @foreach($roles as $role)
+                                <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md mb-3">
+                            <input type="text" name="name" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="col-md mb-3">
+                            <input type="text" name="phone_no" class="form-control" placeholder="Phone No" required>
+                        </div>
+                        <div class="col-md mb-3">
+                            <textarea name="address" class="form-control" placeholder="Address" required></textarea>
+                        </div>
+                        <div class="col-md mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md mb-3">
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            </div>
+                            <div class="col-md mb-3">
+                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-end mt-3">
+                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Edit Form -->
+    <form id="editProfileForm">
+        <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-m">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile Patient Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    <!-- Success Message -->
+                    <div id="responseEditMsg" class="alert d-none"></div>
                         @csrf
                         <div class="col-md mb-3">
                             <select name="role_id" class="form-control" required>
