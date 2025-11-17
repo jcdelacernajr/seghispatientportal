@@ -17,6 +17,13 @@ class MedicalRecordsController extends Controller
     {
         $records = MedicalRecord::with('patient');
 
+        // Restrict to logged-in patient's own records
+        if (auth()->user()->hasRole('patient')) {
+            $records->where('patient_id', auth()->user()->patient->id ?? 0);
+        }
+
+       // dd(auth()->user()->role);
+
         return DataTables::of($records)
             ->addColumn('name', function ($record) {
                 return $record->patient->name ?? 'N/A';
