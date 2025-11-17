@@ -36,7 +36,7 @@
                     <div class="modal-body">
                         
                     <!-- Success Message -->
-                    <div id="responseSuccessMsg" class="alert d-none"></div>
+                    <div id="responseAddMsg" class="alert d-none"></div>
                         @csrf
                         <div class="col-md mb-3">
                             <select name="role_id" class="form-control" required>
@@ -93,8 +93,9 @@
                     <!-- Success Message -->
                     <div id="responseEditMsg" class="alert d-none"></div>
                         @csrf
+                        <input type="hidden" name="user_id" id="edit_user_id">
                         <div class="col-md mb-3">
-                            <select name="role_id" class="form-control" required>
+                            <select name="role_id" id="edit_role_id" class="form-control" required>
                                 <option value="">Select Role</option>
                                 @foreach($roles as $role)
                                 <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
@@ -102,23 +103,23 @@
                             </select>
                         </div>
                         <div class="col-md mb-3">
-                            <input type="text" name="name" class="form-control" placeholder="Name" required>
+                            <input type="text" name="name" id="edit_name" class="form-control" placeholder="Name" required>
                         </div>
                         <div class="col-md mb-3">
-                            <input type="text" name="phone_no" class="form-control" placeholder="Phone No" required>
+                            <input type="text" name="phone_no"  id="edit_phone_no" class="form-control" placeholder="Phone No" required>
                         </div>
                         <div class="col-md mb-3">
-                            <textarea name="address" class="form-control" placeholder="Address" required></textarea>
+                            <textarea name="address" id="edit_address" class="form-control" placeholder="Address" required></textarea>
                         </div>
                         <div class="col-md mb-3">
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            <input type="email" name="email" id="edit_email" class="form-control" placeholder="Email" required>
                         </div>
                         <div class="row">
                             <div class="col-md mb-3">
-                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="password" id="edit_password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="col-md mb-3">
-                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                                <input type="password" name="password_confirmation" id="edit_password_confirmation" class="form-control" placeholder="Confirm Password" required>
                             </div>
                         </div>
 
@@ -126,7 +127,7 @@
                     <div class="modal-footer">
                         <div class="text-end mt-3">
                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </div>
@@ -143,7 +144,9 @@
     <script>
         window.profilePatientRoutes = {
             list: "{{ route('profile-patient-management.list') }}",
-            store: "{{ route('profile-patient-management.store') }}"
+            store: "{{ route('profile-patient-management.store') }}",
+            update: "{{ route('profile-patient-management.update') }}",
+            patient: "{{ route('profile-patient-management.patient', ':id') }}",
         };
     </script>
     <script src="{{ asset('js/profile_patient_management.js') }}"></script>

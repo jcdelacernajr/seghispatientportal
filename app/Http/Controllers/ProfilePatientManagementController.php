@@ -45,7 +45,7 @@ class ProfilePatientManagementController extends Controller
             Patients::create([
                 'user_id' => $user->id,
                 'name'    => $validated['name'],
-                'phone_no' => $validated['phone_no'],
+                'phone' => $validated['phone_no'],
                 'address' => $validated['address'],
                 'email'   => $user->email,
             ]);
@@ -62,12 +62,82 @@ class ProfilePatientManagementController extends Controller
         }
     }
 
+    public function patient($id)
+    {
+        $user = User::with('patient', 'roles')->findOrFail($id);
+        return response()->json($user);
+    }
+
+    public function update(Request $request)
+    {
+        try {
+
+            $id = $request->input('user_id');
+
+            $validated = $request->validate([
+                'name'       => 'required|string|max:255',
+                'email'      => 'required|email|unique:users,email,' . $id,
+                'phone_no'   => 'required|string|max:11',
+                'address'    => 'required|string|max:255',
+                'password'   => 'nullable|string|min:6|confirmed',
+                'role_id'    => 'required|exists:roles,id'
+            ]);
+
+            DB::beginTransaction();
+
+            // Fetch the user
+            $user = User::findOrFail($id);
+
+            // Update user email
+            $user->email = $validated['email'];
+
+            // Update password only if provided
+            if (!empty($validated['password'])) {
+                $user->password = Hash::make($validated['password']);
+            }
+
+            $user->save();
+
+            // Sync role
+            $user->roles()->sync([$validated['role_id']]);
+
+            // Update patient record
+            $patient = Patients::where('user_id', $user->id)->firstOrFail();
+            $patient->update([
+                'name'    => $validated['name'],
+                'phone'   => $validated['phone_no'],
+                'address' => $validated['address'],
+                'email'   => $validated['email'], // Keep sync with user
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Patient profile updated successfully'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Failed to update patient profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function list()
     {
         // Get users who have 'patient' role, including patient info
+        //$users = User::whereHas('roles', function ($query) {
+        //    $query->where('name', 'patient');
+        //})->with('patient', 'roles');
+        
         $users = User::whereHas('roles', function ($query) {
-            $query->where('name', 'patient');
-        })->with('patient', 'roles');
+            $query->whereIn('name', ['patient','doctor']);
+        })
+        ->with('roles')
+        ->orderBy('id', 'desc')
+        ->get();
 
         return DataTables::of($users)
             ->addColumn('name', function ($user) {
@@ -84,10 +154,10 @@ class ProfilePatientManagementController extends Controller
             })
             ->addColumn('action', function ($user) {
                 return '
-                    <button class="btn btn-sm btn-primary editUser" data-bs-toggle="modal" data-bs-target="#editProfileModal" data-id="' . $user->id . '">
+                    <button class="btn btn-sm btn-primary editProfilePatient" data-bs-toggle="modal" data-bs-target="#editProfileModal" data-id="' . $user->id . '">
                         Edit
                     </button>
-                    <button class="btn btn-sm btn-danger deleteUser" data-id="' . $user->id . '">
+                    <button class="btn btn-sm btn-danger deleteProfilePatient" data-id="' . $user->id . '">
                         Delete
                     </button>
                 ';

@@ -12,7 +12,7 @@ function loadDataTable(tableSelector, ajaxUrl, columns) {
     return $(tableSelector).DataTable({
         processing: true,
         serverSide: true,
-
+        ordering: false,
         ajax: function(data, callback) {
             axios.get(ajaxUrl, { params: data })
                 .then(response => {

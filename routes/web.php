@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin,doctor')->group(function () {
         Route::get('/profile-patient-management', [ProfilePatientManagementController::class, 'index'])->name('profile-patient-management');
         Route::post('profile-patient-management/store', [ProfilePatientManagementController::class, 'store'])->name('profile-patient-management.store');
+        Route::post('profile-patient-management/update', [ProfilePatientManagementController::class, 'update'])->name('profile-patient-management.update');
+        Route::get('profile-patient-management/patient/{id}', [ProfilePatientManagementController::class, 'patient'])->name('profile-patient-management.patient');
         Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
     });
     
