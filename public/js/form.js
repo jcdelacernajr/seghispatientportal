@@ -16,9 +16,12 @@ function ajaxFormSubmit(formSelector, url, onSuccess, onError = null) {
 
         axios.post(url, formData)
             .then(response => {
+                //console.log(response);
                 if (typeof onSuccess === "function") {
                     onSuccess(response.data);
                 }
+
+                // Reset the form
                 form.reset();
             })
             .catch(error => {

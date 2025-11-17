@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
      // Profile-management only for admin and doctor
     Route::middleware('role:admin,doctor')->group(function () {
         Route::get('/profile-patient-management', [ProfilePatientManagementController::class, 'index'])->name('profile-patient-management');
-        Route::get('profile-patient-management/store', [ProfilePatientManagementController::class, 'store'])->name('profile-patient-management.store');
+        Route::post('profile-patient-management/store', [ProfilePatientManagementController::class, 'store'])->name('profile-patient-management.store');
         Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
     });
     

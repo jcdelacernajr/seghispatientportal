@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Patients;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,22 +20,46 @@ class ProfilePatientManagementController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'role_id' => 'required|exists:roles,id'
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'phone_no' => 'required|string|max:11',
+                'address' => 'required|string|max:255',
+                'password' => 'required|string|min:6|confirmed',
+                'role_id' => 'required|exists:roles,id'
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+            DB::beginTransaction();
 
-        $user->roles()->attach($request->role_id);
+            // Create the patient user data
+            $user = User::create([
+                'email'    => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
 
-        return response()->json(['message' => 'User profile created successfully']);
+            // Assign the selected role
+            $user->roles()->attach($validated['role_id']);
+
+            // Create patient record
+            Patients::create([
+                'user_id' => $user->id,
+                'name'    => $validated['name'],
+                'phone_no' => $validated['phone_no'],
+                'address' => $validated['address'],
+                'email'   => $user->email,
+            ]);
+
+            DB::commit();
+
+            return response()->json(['message' => 'Patient profile created successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack(); // ROLLBACK if something fails
+            return response()->json([
+                'message' => 'Failed to create user profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function list()
@@ -56,6 +82,17 @@ class ProfilePatientManagementController extends Controller
             ->addColumn('created_at', function ($user) {
                 return $user->created_at->format('Y-m-d H:i:s');
             })
+            ->addColumn('action', function ($user) {
+                return '
+                    <button class="btn btn-sm btn-primary editUser" data-id="' . $user->id . '">
+                        Edit
+                    </button>
+                    <button class="btn btn-sm btn-danger deleteUser" data-id="' . $user->id . '">
+                        Delete
+                    </button>
+                ';
+            })
+            ->rawColumns(['action'])
             ->make(true);
     }
 }
