@@ -82,11 +82,9 @@
             $(document).ready(function() {
 
                 // Initialize DataTable
-                let table = $('#profilePatientTable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('profile-patient-management.list') }}",
-                    columns: [{
+                let table = loadDataTable('#profilePatientTable',
+                    "{{ route('profile-patient-management.list') }}",
+                    [{
                             data: 'id',
                             name: 'id'
                         },
@@ -109,26 +107,18 @@
                             name: 'created_at'
                         }
                     ]
-                });
+                );
 
                 // Add User Form Submission
-                $('#addProfileForm').submit(function(e) {
-                    e.preventDefault();
-
-                    $.ajax({
-                        url: "{{ route('profile-patient-management.store') }}",
-                        method: "POST",
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            $('#successMsg').removeClass('d-none').text(response.message);
-                            $('#addProfileForm')[0].reset();
-                            table.ajax.reload();
-                        },
-                        error: function(xhr) {
-                            alert(xhr.responseJSON.message || 'Something went wrong');
-                        }
-                    });
-                });
+                ajaxFormSubmit(
+                    '#addProfileForm',
+                    "{{ route('profile-patient-management.store') }}",
+                    function(response) {
+                        $('#successMsg').removeClass('d-none').text(response.message);
+                        table.ajax.reload();
+                        $('#addUserModal').modal('hide');
+                    }
+                );
 
             });
         </script>
