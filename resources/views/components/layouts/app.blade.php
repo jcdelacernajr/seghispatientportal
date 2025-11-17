@@ -22,7 +22,14 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('profile-patient-management') }}">Profile Patient Management</a></li>
+                    @if(auth()->check() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('doctor')))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile-patient-management') }}">
+                                Profile Patient Management
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="nav-item"><a class="nav-link" href="{{ route('medical-records') }}">Medical Records</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('appointments') }}">Appointments</a></li>
                 </ul>
