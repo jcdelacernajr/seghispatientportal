@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Patients;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
@@ -32,6 +33,13 @@ class RegisterController extends Controller
         if ($patientRole) {
             $user->roles()->attach($patientRole->id);
         }
+
+        // Create patient record
+        Patients::create([
+            'user_id' => $user->id,
+            'name'    => $validated['name'] ?? 'Patient Name', // default if name not collected
+            'email'   => $user->email,
+        ]);
 
         auth()->login($user);
 

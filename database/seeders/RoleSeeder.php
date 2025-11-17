@@ -9,6 +9,9 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ *  Run: php artisan make:seeder RoleSeeder
+ */
 class RoleSeeder extends Seeder
 {
     /**

@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->roles->contains('name', $roleName);
     }
+
+    public function patient()
+    {
+        return $this->hasOne(Patients::class);
+    }
 }

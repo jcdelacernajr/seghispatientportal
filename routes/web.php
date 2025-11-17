@@ -8,7 +8,7 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\MedicalRecords;
 use App\Http\Controllers\MedicalRecordsController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\ProfilePatientManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +49,9 @@ Route::middleware('auth')->group(function () {
 
      // Profile-management only for admin and doctor
     Route::middleware('role:admin,doctor')->group(function () {
-        Route::get('/profile-management', [ProfileManagementController::class, 'index'])->name('profile-management');
+        Route::get('/profile-patient-management', [ProfilePatientManagementController::class, 'index'])->name('profile-patient-management');
+        Route::get('profile-patient-management/store', [ProfilePatientManagementController::class, 'store'])->name('profile-patient-management.store');
+        Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
     });
     
 });
