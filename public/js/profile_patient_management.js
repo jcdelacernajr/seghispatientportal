@@ -108,4 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 3000);
         }
     );
+
+    deleteRow(
+        '#profilePatientTable', 
+        profilePatientRoutes.delete,
+        function(data){
+            table.ajax.reload();
+        },
+        function(errorMsg){
+            alert(errorMsg);
+        }
+    );
+
 });

@@ -147,6 +147,7 @@
             store: "{{ route('profile-patient-management.store') }}",
             update: "{{ route('profile-patient-management.update') }}",
             patient: "{{ route('profile-patient-management.patient', ':id') }}",
+            delete: "{{ route('profile-patient-management.delete', ':id') }}",
         };
     </script>
     <script src="{{ asset('js/profile_patient_management.js') }}"></script>

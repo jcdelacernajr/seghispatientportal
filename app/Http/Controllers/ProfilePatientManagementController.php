@@ -115,7 +115,6 @@ class ProfilePatientManagementController extends Controller
             return response()->json([
                 'message' => 'Patient profile updated successfully'
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -125,19 +124,48 @@ class ProfilePatientManagementController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = User::findOrFail($id);
+
+            // Delete patient record first
+            Patients::where('user_id', $id)->delete();
+
+            // Detach roles
+            $user->roles()->detach();
+
+            // Delete user
+            $user->delete();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Patient profile deleted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Failed to delete patient profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
     public function list()
     {
         // Get users who have 'patient' role, including patient info
         //$users = User::whereHas('roles', function ($query) {
         //    $query->where('name', 'patient');
         //})->with('patient', 'roles');
-        
+
         $users = User::whereHas('roles', function ($query) {
-            $query->whereIn('name', ['patient','doctor']);
+            $query->whereIn('name', ['patient', 'doctor']);
         })
-        ->with('roles')
-        ->orderBy('id', 'desc')
-        ->get();
+            ->with('roles')
+            ->orderBy('id', 'desc')
+            ->get();
 
         return DataTables::of($users)
             ->addColumn('name', function ($user) {
@@ -157,7 +185,7 @@ class ProfilePatientManagementController extends Controller
                     <button class="btn btn-sm btn-primary editProfilePatient" data-bs-toggle="modal" data-bs-target="#editProfileModal" data-id="' . $user->id . '">
                         Edit
                     </button>
-                    <button class="btn btn-sm btn-danger deleteProfilePatient" data-id="' . $user->id . '">
+                    <button class="btn btn-sm btn-danger deleteBtn" data-id="' . $user->id . '">
                         Delete
                     </button>
                 ';
