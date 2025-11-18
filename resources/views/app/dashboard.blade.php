@@ -5,24 +5,20 @@
 
     <section id="core-functionalities">
         <h2>Upcoming Appointments</h2>
+        @if($appointments->isEmpty())
+        <p>No upcoming appointments.</p>
+        @else
         <ul>
-            <li>User Authentication</li>
-            <li>Dashboard Overview</li>
-            <li>Profile Management</li>
-            <li>Appointments (CRUD + AJAX)</li>
-            <li>Medical Records</li>
-            <li>Notifications / Events</li>
+            @foreach($appointments as $appt)
+            <li>
+                {{ date('M d, Y', strtotime($appt->appointment_date)) }} {{ date('H:i', strtotime($appt->appointment_time)) }} 
+                - {{ $appt->title ?? 'No title' }}
+            </li>
+
+            @endforeach
         </ul>
+        @endif
     </section>
 
-    <section id="prototype-features" class="mt-5">
-        <h2>Notifications</h2>
-        <ul>
-            <li>Complete CRUD operations using AJAX</li>
-            <li>Smooth navigation flow between sections</li>
-            <li>Real-time data update simulation</li>
-            <li>Backend data may be static or mock data</li>
-        </ul>
-    </section>
 
 </x-layouts.app>
