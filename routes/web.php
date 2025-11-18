@@ -48,8 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/appointments/store', [AppointmentsController::class, 'store'])->name('appointments.store');
 
     Route::get('/appointments/{id}', [AppointmentsController::class, 'show'])->name('appointments.show');
-    
-    Route::put('/appointments/{id}', [AppointmentsController::class, 'update'])->name('appointments.update');
+
+    Route::post('/appointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
+
     Route::delete('/appointments/{id}', [AppointmentsController::class, 'destroy'])->name('appointments.destroy');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

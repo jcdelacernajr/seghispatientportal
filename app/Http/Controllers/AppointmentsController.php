@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentsController extends Controller
 {
@@ -53,8 +54,6 @@ class AppointmentsController extends Controller
                 return '
                 <button 
                     class="btn btn-sm btn-warning editAppointment"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editAppointmentModal"
                     data-id="' . $appt->id . '">
                     Edit
                 </button>
@@ -86,7 +85,7 @@ class AppointmentsController extends Controller
             'title' => 'required|string',
             'appointment_date' => 'required|date',
             'appointment_time' => 'required',
-            'notes' => 'nullable|string',
+            'notes' => 'required|string|max:1000',
         ]);
 
         $validated['user_id'] = Auth::id();
@@ -102,13 +101,40 @@ class AppointmentsController extends Controller
         return response()->json($data);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $appointment = Appointment::findOrFail($id);
+         try {
 
-        $appointment->update($request->all());
+            $appoitnmentId = $request->input('appointment_id');
 
-        return response()->json(['message' => 'Appointment updated successfully!']);
+            $validated = $request->validate([
+                'title'             => 'required|string',
+                'appointment_date'  => 'required|date',
+                'appointment_time'  => 'required',
+                'notes'             => 'required|string|max:1000',
+            ]);
+
+            DB::beginTransaction();
+            $appointment = Appointment::findOrFail($appoitnmentId);
+            $appointment->update([
+                'title'            => $validated['title'],
+                'appointment_date' => $validated['appointment_date'],
+                'appointment_time' => $validated['appointment_time'],
+                'notes'            => $validated['notes'],
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Patient appointment updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Failed to update patient appointment',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function destroy($id)

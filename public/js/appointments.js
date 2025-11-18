@@ -18,15 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     );
 
-    const modal = new bootstrap.Modal(document.getElementById('appointmentModal'));
-
+    const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal'));
     document.getElementById('btnAddAppointment').addEventListener('click', () => {
         clearForm();
         modal.show();
     });
 
     ajaxFormSubmit(
-        "#appointmentForm",
+        "#addAppointmentForm",
         appointmentRoutes.store,
         "POST",
         function (response) {
@@ -46,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
+    const editModal = new bootstrap.Modal(document.getElementById('editAppointmentModal'));
+
     document.querySelector('#appointmentsTable tbody').addEventListener('click', function(e){
         if(e.target && e.target.matches('.editAppointment')){
             let userId = e.target.getAttribute('data-id');
@@ -53,30 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(res => {
                     const appointment = res.data;
                     document.getElementById('edit_appointment_id').value = appointment.id; 
-                    document.getElementById('edit_title').value = appointment?.title || "";
-                    document.getElementById('edit_appointment_date').value = appointment?.appointment_date;
-                    document.getElementById('edit_appointment_time').value = appointment?.appointment_time;
-                    document.getElementById('edit_notes').value = appointment?.notes;
+                    document.getElementById('edit_title').value = appointment.title;
+                    document.getElementById('edit_appointment_date').value = appointment.appointment_date;
+                    document.getElementById('edit_appointment_time').value = appointment.appointment_time;
+                    document.getElementById('edit_notes').value = appointment.notes;
+
+                    editModal.show();
                 });
         }
     });
 
+    ajaxFormSubmit(
+        "#editAppointmentForm",
+        appointmentRoutes.update,
+        "POST",
+        function (response) {
+            editModal.hide();
+            table.ajax.reload();
+        },
+        function (error) {  
+            const errorDiv = document.getElementById('editAppointmentErrorMsg');
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = error;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+                errorDiv.innerText = '';
+            }, 3000);
+        }
+    );
+
 
 });
-
-// Load 1 record
-function editAppointment(id) {
-    axios.get(`/appointments/${id}`).then(res => {
-        let d = res.data;
-        appointment_id.value = d.id;
-        title.value = d.title;
-        appointment_date.value = d.appointment_date;
-        appointment_time.value = d.appointment_time;
-        notes.value = d.notes;
-
-        new bootstrap.Modal(document.getElementById('appointmentModal')).show();
-    });
-}
 
 // Delete
 function deleteAppointment(id) {

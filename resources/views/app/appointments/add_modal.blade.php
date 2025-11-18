@@ -1,7 +1,7 @@
-<div class="modal fade" id="appointmentModal">
+<div class="modal fade" id="addAppointmentModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="appointmentForm">
+            <form id="addAppointmentForm">
                 @csrf
                 <input type="hidden" id="appointment_id">
 

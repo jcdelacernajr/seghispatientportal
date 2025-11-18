@@ -36,6 +36,7 @@
         list: "{{ route('appointments.list') }}",
         store: "{{ route('appointments.store') }}",
         appointment: "{{ route('appointments.show', ':id') }}",
+        update: "{{ route('appointments.update') }}",
     };
 </script>
 <script src="{{ asset('js/appointments.js') }}"></script>
