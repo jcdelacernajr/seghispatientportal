@@ -3,10 +3,11 @@
 <h2 class="mb-3">Patient Appointments</h2>
 
 @if(auth()->check() && (auth()->user()->hasRole('patient')))
-    <div class="d-flex justify-content-end">
-        <button class="btn btn-primary mb-3" id="btnAddAppointment">Add Appointment</button>
-    </div>
 @endif
+
+<div class="d-flex justify-content-end">
+    <button class="btn btn-primary mb-3" id="btnAddAppointment">Add Appointment</button>
+</div>
 
 <table class="table table-bordered" id="appointmentsTable">
     <thead>
@@ -33,6 +34,8 @@
         appointment: "{{ route('appointments.show', ':id') }}",
         update: "{{ route('appointments.update') }}",
         delete: "{{ route('appointments.delete', ':id') }}",
+        cancel: "{{ route('appointments.cancel', ':id') }}",
+        confirm: "{{ route('appointments.confirm', ':id') }}",
     };
 </script>
 <script src="{{ asset('js/appointments.js') }}"></script>

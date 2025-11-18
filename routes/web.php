@@ -46,12 +46,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
     Route::get('/appointments/list', [AppointmentsController::class, 'list'])->name('appointments.list');
     Route::post('/appointments/store', [AppointmentsController::class, 'store'])->name('appointments.store');
-
     Route::get('/appointments/{id}', [AppointmentsController::class, 'show'])->name('appointments.show');
-
     Route::post('/appointments/update', [AppointmentsController::class, 'update'])->name('appointments.update');
-
     Route::delete('/appointments/delete/{id}', [AppointmentsController::class, 'delete'])->name('appointments.delete');
+    Route::put('/appointments/cancel/{id}', [AppointmentsController::class, 'cancel'])->name('appointments.cancel');
+    Route::put('/appointments/confirm/{id}', [AppointmentsController::class, 'confirm'])->name('appointments.confirm');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');

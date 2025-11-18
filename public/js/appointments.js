@@ -96,6 +96,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
+    document.querySelector('#appointmentsTable tbody').addEventListener('click', function(e){
+        if(e.target && e.target.matches('.cancelAppointment')){
+            let userId = e.target.getAttribute('data-id');
+            axios.post(appointmentRoutes.cancel.replace(':id', userId), {
+                _method: 'PUT'
+            })
+            .then(response => {
+                alert(response.data.message);
+                table.ajax.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Failed to cancel appointment.');
+            });
+        }
+    });
+
+    document.querySelector('#appointmentsTable tbody').addEventListener('click', function(e){
+        if(e.target && e.target.matches('.confirmAppointment')){
+            let userId = e.target.getAttribute('data-id');
+            axios.post(appointmentRoutes.confirm.replace(':id', userId), {
+                _method: 'PUT'
+            })
+            .then(response => {
+                alert(response.data.message);
+                table.ajax.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Failed to confirm appointment.');
+            });
+        }
+    });
+
 });
 
 function clearForm() {
