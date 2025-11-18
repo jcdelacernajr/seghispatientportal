@@ -25,50 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.show();
     });
 
-    document.getElementById('appointmentForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        let id = document.getElementById('appointment_id').value;
-        let url = id ? `/appointments/${id}` : '/appointments';
-        let method = id ? 'PUT' : 'POST';
-
-        axios({
-            url: url,
-            method: method,
-            data: {
-                title: title.value,
-                appointment_date: appointment_date.value,
-                appointment_time: appointment_time.value,
-                notes: notes.value
-            }
-        }).then(res => {
-            loadAppointments();
+    ajaxFormSubmit(
+        "#appointmentForm",
+        appointmentRoutes.store,
+        "POST",
+        function (response) {
             modal.hide();
-        });
-    });
+            table.ajax.reload();
+        },
+        function (error) {  
+            const errorDiv = document.getElementById('appointmentErrorMsg');
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = error;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+                errorDiv.innerText = '';
+            }, 3000);
+        }
+    );
+
 });
-
-// function loadAppointments() {
-//     axios.get('/api/appointments-list').then(res => {
-//         let tbody = document.querySelector('#appointmentsTable tbody');
-//         tbody.innerHTML = '';
-
-//         res.data.forEach(item => {
-//             tbody.innerHTML += `
-//                 <tr>
-//                     <td>${item.title}</td>
-//                     <td>${item.appointment_date}</td>
-//                     <td>${item.appointment_time}</td>
-//                     <td>${item.status}</td>
-//                     <td>
-//                         <button class="btn btn-sm btn-warning" onclick="editAppointment(${item.id})">Edit</button>
-//                         <button class="btn btn-sm btn-danger" onclick="deleteAppointment(${item.id})">Delete</button>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-//     });
-// }
 
 // Load 1 record
 function editAppointment(id) {

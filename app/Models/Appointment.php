@@ -25,7 +25,7 @@ class Appointment extends Model
 
     public function patient()
     {
-        // user_id in appointments → matches user_id in patients table.
+        // user_id in appointments matches user_id in patients table.
         return $this->belongsTo(Patients::class, 'user_id', 'user_id');
     }
 }

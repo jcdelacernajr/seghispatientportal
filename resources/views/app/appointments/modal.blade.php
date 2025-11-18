@@ -11,25 +11,25 @@
                 </div>
 
                 <div class="modal-body">
-
+                    <div id="appointmentErrorMsg" class="alert alert-danger d-none"></div>
                     <div class="mb-3">
                         <label>Title</label>
-                        <input type="text" id="title" class="form-control" required>
+                        <input type="text" name="title" id="title" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label>Date</label>
-                        <input type="date" id="appointment_date" class="form-control" required>
+                        <input type="date" name="appointment_date" id="appointment_date" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label>Time</label>
-                        <input type="time" id="appointment_time" class="form-control" required>
+                        <input type="time" name="appointment_time" id="appointment_time" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label>Notes</label>
-                        <textarea id="notes" class="form-control"></textarea>
+                        <textarea name="notes" id="notes" class="form-control"></textarea>
                     </div>
 
                 </div>
