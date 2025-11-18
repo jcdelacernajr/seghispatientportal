@@ -22,7 +22,8 @@
     <tbody></tbody>
 </table>
 
-@include('app.appointments.modal')
+@include('app.appointments.add_modal')
+@include('app.appointments.edit_modal')
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -34,6 +35,7 @@
     window.appointmentRoutes = {
         list: "{{ route('appointments.list') }}",
         store: "{{ route('appointments.store') }}",
+        appointment: "{{ route('appointments.show', ':id') }}",
     };
 </script>
 <script src="{{ asset('js/appointments.js') }}"></script>

@@ -46,6 +46,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
+    document.querySelector('#appointmentsTable tbody').addEventListener('click', function(e){
+        if(e.target && e.target.matches('.editAppointment')){
+            let userId = e.target.getAttribute('data-id');
+            axios.get(appointmentRoutes.appointment.replace(':id', userId))
+                .then(res => {
+                    const appointment = res.data;
+                    document.getElementById('edit_appointment_id').value = appointment.id; 
+                    document.getElementById('edit_title').value = appointment?.title || "";
+                    document.getElementById('edit_appointment_date').value = appointment?.appointment_date;
+                    document.getElementById('edit_appointment_time').value = appointment?.appointment_time;
+                    document.getElementById('edit_notes').value = appointment?.notes;
+                });
+        }
+    });
+
+
 });
 
 // Load 1 record
