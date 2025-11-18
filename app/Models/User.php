@@ -52,6 +52,15 @@ class User extends Authenticatable
         return $this->roles->contains('name', $roleName);
     }
 
+    public function hasAnyRole($roles)
+    {
+        $roles = (array) $roles; // convert single string to array if needed
+
+        // Get the user's role names and check for intersection
+        return $this->roles->pluck('name')->intersect($roles)->isNotEmpty();
+    }
+
+
     public function patient()
     {
         return $this->hasOne(Patients::class);

@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 // Guest routes
 Route::middleware('guest')->group(function () {
+    Route::redirect('/', '/login');
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate']);
 
@@ -38,13 +39,17 @@ Route::middleware('guest')->group(function () {
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
-    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
     Route::get('/medical-records/list', [MedicalRecordsController::class, 'list'])->name('medical-records.list');
 
     Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
+    Route::get('/appointments/list', [AppointmentsController::class, 'list'])->name('appointments.list');
+    Route::post('/appointments', [AppointmentsController::class, 'store'])->name('appointments.store');
+    Route::get('/appointments/{id}', [AppointmentsController::class, 'show'])->name('appointments.show');
+    Route::put('/appointments/{id}', [AppointmentsController::class, 'update'])->name('appointments.update');
+    Route::delete('/appointments/{id}', [AppointmentsController::class, 'destroy'])->name('appointments.destroy');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
