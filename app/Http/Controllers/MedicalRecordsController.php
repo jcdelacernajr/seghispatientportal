@@ -5,12 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MedicalRecord;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\User;
 
 class MedicalRecordsController extends Controller
 {
     public function index()
     {
-        return view('app.medical_records');
+         $patients = User::whereHas('roles', function($q) {
+            $q->where('name', 'Patient');
+        })
+        ->with('patient')
+        ->get();
+
+        return view('app.medical_record.medical_records', compact('patients'));
+
+      //  return view('app.medical_record.medical_records');
     }
 
     public function list(Request $request)

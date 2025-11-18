@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { data: "status", name: "status" },
             {
                 data: "action",
-                name: "action",
+                name: "action", 
                 orderable: false,
                 searchable: false,
             },

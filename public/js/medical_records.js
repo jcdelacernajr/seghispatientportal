@@ -39,4 +39,17 @@ document.addEventListener("DOMContentLoaded", function () {
     ['startDate', 'endDate', 'recordTypeFilter'].forEach(id => {
         document.getElementById(id)?.addEventListener('change', () => table.ajax.reload());
     });
+
+    const modal = new bootstrap.Modal(document.getElementById('addMedicalRecordModal'));
+    document.getElementById('btnAddMedicalRecord').addEventListener('click', () => {
+        clearForm();
+        modal.show();
+    });
+
+    
+
 });
+
+function clearForm() {
+   // TODO
+}

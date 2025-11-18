@@ -2,9 +2,6 @@
 
 <h2 class="mb-3">Patient Appointments</h2>
 
-@if(auth()->check() && (auth()->user()->hasRole('patient')))
-@endif
-
 <div class="d-flex justify-content-end">
     <button class="btn btn-primary mb-3" id="btnAddAppointment">Add Appointment</button>
 </div>
