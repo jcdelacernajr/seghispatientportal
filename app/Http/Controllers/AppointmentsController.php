@@ -33,13 +33,13 @@ class AppointmentsController extends Controller
 
         return DataTables::of($appointments)
             ->addColumn('name', function ($appt) {
-                 return $appt->patient ? $appt->patient->name : ''; // this is null 
+                 return $appt->patient ? $appt->patient->name : $appt->user->email; // this is null 
             })
             ->addColumn('title', function ($appt) {
                 return $appt->title;
             })
             ->addColumn('appointment_date', function ($appt) {
-                return date('Y-m-d', strtotime($appt->appointment_date));
+                return date('M d, Y', strtotime($appt->appointment_date));
             })
             ->addColumn('appointment_time', function ($appt) {
                 return date('h:i A', strtotime($appt->appointment_time));
@@ -48,7 +48,55 @@ class AppointmentsController extends Controller
                 return $appt->notes ?? '';
             })
             ->addColumn('status', function ($appt) {
-                return ucfirst($appt->status);
+                $statusText = ucfirst($appt->status);
+
+                // // Only show cancel button if appointment is not already canceled
+                // $cancelBtn = '';
+                // if ($appt->status !== 'Cancelled' && $appt->status !== 'Confirmed') {
+                //     $cancelBtn = ' <button 
+                //         class="btn btn-sm btn-warning cancelAppointment ms-auto" 
+                //         data-id="' . $appt->id . '">
+                //         Cancel
+                //     </button>';
+                // }
+
+                //  // Wrap both in a flex container
+                // return '<div class="d-flex align-items-center">' . $statusText . $cancelBtn . '</div>';
+
+                $buttons = '';
+                $user = auth()->user();
+                // Admin or Doctor can Confirm and Cancel Pending appointments
+                if ($appt->status === 'Pending' && ($user->hasRole('admin') || $user->hasRole('doctor'))) {
+
+                    $buttons .= '<div class="ms-auto">';
+                    // Cancel button
+                    $buttons .= ' <button 
+                        class="btn btn-sm btn-warning cancelAppointment" 
+                        data-id="' . $appt->id . '">
+                        Cancel
+                    </button>';
+
+                    // Confirm button
+                    $buttons .= ' <button 
+                        class="btn btn-sm btn-success confirmAppointment" 
+                        data-id="' . $appt->id . '">
+                        Confirm
+                    </button>';
+
+                    $buttons .= '</div>';
+                }
+
+                // Patient (appointment owner) can Cancel their own Pending appointment
+                if ($appt->status === 'Pending' && $user->id === $appt->user_id) {
+                    $buttons .= ' <button 
+                        class="btn btn-sm btn-warning cancelAppointment ms-auto" 
+                        data-id="' . $appt->id . '">
+                        Cancel
+                    </button>';
+                }
+
+                // Wrap status text and buttons in a flex container
+                return '<div class="d-flex align-items-center">' . $statusText . $buttons . '</div>';
             })
             ->addColumn('action', function ($appt) {
                 return '
@@ -59,7 +107,7 @@ class AppointmentsController extends Controller
                 </button>
 
                 <button 
-                    class="btn btn-sm btn-danger deleteAppointment"
+                    class="btn btn-sm btn-danger deleteBtn"
                     data-id="' . $appt->id . '">
                     Delete
                 </button>
@@ -75,7 +123,7 @@ class AppointmentsController extends Controller
                     });
                 }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['status','action'])
             ->make(true);
     }
 
@@ -137,9 +185,28 @@ class AppointmentsController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         Appointment::destroy($id);
-        return response()->json(['message' => 'Appointment deleted successfully!']);
+        return response()->json(['message' => 'Patient Appointment deleted successfully!']);
     }
+
+    public function cancel($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->status = 'Cancelled';
+        $appointment->save();
+
+        return response()->json(['message' => 'Appointment cancelled successfully.']);
+    }
+
+    public function confirm($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->status = 'Confirmed';
+        $appointment->save();
+
+        return response()->json(['message' => 'Appointment confirmed successfully.']);
+    }
+
 }
