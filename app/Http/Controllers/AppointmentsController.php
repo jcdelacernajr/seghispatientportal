@@ -48,7 +48,20 @@ class AppointmentsController extends Controller
                 return $appt->notes ?? '';
             })
             ->addColumn('status', function ($appt) {
-                return ucfirst($appt->status);
+                $statusText = ucfirst($appt->status);
+
+                // Only show cancel button if appointment is not already canceled
+                $cancelBtn = '';
+                if ($appt->status !== 'canceled') {
+                    $cancelBtn = ' <button 
+                        class="btn btn-sm btn-warning cancelAppointment ms-auto" 
+                        data-id="' . $appt->id . '">
+                        Cancel
+                    </button>';
+                }
+
+                 // Wrap both in a flex container
+                return '<div class="d-flex align-items-center">' . $statusText . $cancelBtn . '</div>';
             })
             ->addColumn('action', function ($appt) {
                 return '
@@ -75,7 +88,7 @@ class AppointmentsController extends Controller
                     });
                 }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['status','action'])
             ->make(true);
     }
 

@@ -2,9 +2,11 @@
 
 <h2 class="mb-3">Patient Appointments</h2>
 
-<div class="d-flex justify-content-end">
-    <button class="btn btn-primary mb-3" id="btnAddAppointment">Add Appointment</button>
-</div>
+@if(auth()->check() && (auth()->user()->hasRole('patient')))
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mb-3" id="btnAddAppointment">Add Appointment</button>
+    </div>
+@endif
 
 <table class="table table-bordered" id="appointmentsTable">
     <thead>
