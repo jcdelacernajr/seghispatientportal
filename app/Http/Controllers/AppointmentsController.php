@@ -33,13 +33,13 @@ class AppointmentsController extends Controller
 
         return DataTables::of($appointments)
             ->addColumn('name', function ($appt) {
-                 return $appt->patient ? $appt->patient->name : ''; // this is null 
+                 return $appt->patient ? $appt->patient->name : $appt->user->email; // this is null 
             })
             ->addColumn('title', function ($appt) {
                 return $appt->title;
             })
             ->addColumn('appointment_date', function ($appt) {
-                return date('Y-m-d', strtotime($appt->appointment_date));
+                return date('M d, Y', strtotime($appt->appointment_date));
             })
             ->addColumn('appointment_time', function ($appt) {
                 return date('h:i A', strtotime($appt->appointment_time));
@@ -59,7 +59,7 @@ class AppointmentsController extends Controller
                 </button>
 
                 <button 
-                    class="btn btn-sm btn-danger deleteAppointment"
+                    class="btn btn-sm btn-danger deleteBtn"
                     data-id="' . $appt->id . '">
                     Delete
                 </button>
@@ -137,9 +137,9 @@ class AppointmentsController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         Appointment::destroy($id);
-        return response()->json(['message' => 'Appointment deleted successfully!']);
+        return response()->json(['message' => 'Patient Appointment deleted successfully!']);
     }
 }

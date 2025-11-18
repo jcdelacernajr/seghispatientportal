@@ -172,7 +172,7 @@ class ProfilePatientManagementController extends Controller
                 return $user->roles->pluck('name')->implode(', ');
             })
             ->addColumn('created_at', function ($user) {
-                return $user->created_at->format('Y-m-d H:i:s');
+                return date('M d, Y', strtotime($user->created_at));
             })
             ->addColumn('action', function ($user) {
                 return '

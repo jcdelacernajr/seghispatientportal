@@ -85,17 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
+    deleteRow(
+        '#appointmentsTable', 
+        appointmentRoutes.delete,
+        function(data){
+            table.ajax.reload();
+        },
+        function(errorMsg){
+            alert(errorMsg);
+        }
+    );
 
 });
-
-// Delete
-function deleteAppointment(id) {
-    if (confirm("Are you sure?")) {
-        axios.delete(`/appointments/${id}`).then(() => {
-            loadAppointments();
-        });
-    }
-}
 
 function clearForm() {
     appointment_id.value = '';

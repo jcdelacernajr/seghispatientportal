@@ -35,7 +35,7 @@ class MedicalRecordsController extends Controller
                 return $record->description;
             })
             ->addColumn('record_date', function ($record) {
-                return $record->record_date;
+                return date('M d, Y', strtotime($record->record_date));
             })
             ->addColumn('action', function ($record) {
                 return '<button class="btn btn-primary btn-sm" data-id="' . $record->id . '">View</button>';
