@@ -16,7 +16,7 @@
                             <span class="badge bg-primary">
                                 {{ date('M d, Y', strtotime($appt->appointment_date)) }}
                                 {{ date('H:i A', strtotime($appt->appointment_time)) }}
-                        </span>
+                        </span>                    
                     </div>
                 </li>
             @endforeach
@@ -33,7 +33,10 @@
         <ul class="list-group">
             @foreach($notifications as $notification)
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>{{ $notification->message }}</div>
+                <div>
+                    {{ $notification->message }}
+                    <span class="badge bg-primary">View</span>
+                </div>
             </li>
 
             @endforeach

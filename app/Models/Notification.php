@@ -20,4 +20,9 @@ class Notification extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function medicalRecords()
+    {
+         return $this->belongsTo(MedicalRecord::class, 'patient_id', 'patient_id');
+    }
 }
