@@ -18,12 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     );
 
-    const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal'));
-    document.getElementById('btnAddAppointment').addEventListener('click', () => {
-        clearForm();
-        modal.show();
-    });
-
+    const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal')); 
+    const btnAddAppointment = document.getElementById('btnAddAppointment');
+    if(btnAddAppointment) {
+        btnAddAppointment.addEventListener('click', () => {
+            clearForm();
+            modal.show();
+        });
+    }
     ajaxFormSubmit(
         "#addAppointmentForm",
         appointmentRoutes.store,

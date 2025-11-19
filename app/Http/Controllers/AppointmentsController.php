@@ -48,10 +48,20 @@ class AppointmentsController extends Controller
 
                 return '<div class="d-flex align-items-center">' . $statusText . $buttons . '</div>';
             })
-            ->addColumn('action', fn($appt) => '
-                <button class="btn btn-sm btn-warning editAppointment" data-id="' . $appt->id . '">Edit</button>
-                <button class="btn btn-sm btn-danger deleteBtn" data-id="' . $appt->id . '">Delete</button>
-            ')
+            ->addColumn('action', function ($appt) {
+                // Only show buttons if status is NOT confirmed
+                if ($appt->status !== 'Confirmed') {
+                    return '
+                        <button class="btn btn-sm btn-warning editAppointment" data-id="' . $appt->id . '">Edit</button>
+                        <button class="btn btn-sm btn-danger deleteBtn" data-id="' . $appt->id . '">Delete</button>
+                    ';
+                } else {
+                    return '...';
+                }
+
+                // If confirmed, return empty string
+                return '';
+            })
             ->filter(function ($query) {
                 if ($search = request('search')['value'] ?? false) {
                     $query->where(function ($q) use ($search) {
