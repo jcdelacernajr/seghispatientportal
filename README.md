@@ -5,16 +5,7 @@ This Laravel application follows **Clean Architecture principles**, separating c
 ---
 
 ## 📂 Directory Structure
-app/
- ├── Http/
- │    └── Controllers/
- │         └── DashboardController.php
- ├── Models/
- ├── Repositories/
- │    ├── AppointmentRepository.php
- │    └── NotificationRepository.php
- ├── Services/
- │    └── DashboardService.php
+<img width="756" height="280" alt="image" src="https://github.com/user-attachments/assets/91254218-4d2a-4cf1-9521-b41330dac75c" />
 
 ---
 
