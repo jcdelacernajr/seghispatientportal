@@ -9,7 +9,7 @@
     {{-- Profile Update Form --}}
     <form id="profile-form">
         @csrf
-        @method('PUT')
+        @method('PUT') 
 
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>

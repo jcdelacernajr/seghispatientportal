@@ -32,5 +32,5 @@ class ProfileController extends Controller
     public function edit()
     {
        
-    }
+    } 
 }
