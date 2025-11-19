@@ -9,7 +9,7 @@ class NotificationRepository
     public function getUnreadNotificationsForPatient($patientId)
     {
         return Notification::where('patient_id', $patientId)
-            ->with('medicalRecords')
+            ->with('medicalRecordsFiles.files')
             ->where('status', 'Unread')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -19,4 +19,5 @@ class NotificationRepository
     {
         return Notification::create($data);
     }
+
 }

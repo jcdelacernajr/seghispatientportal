@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\MedicalRecords;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\MedicalRecordsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePatientManagementController;
@@ -40,6 +40,9 @@ Route::middleware('guest')->group(function () {
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])->name('notifications.mark-read');
+
     Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
     Route::get('/medical-records/list', [MedicalRecordsController::class, 'list'])->name('medical-records.list');
     Route::post('/medical-records/store', [MedicalRecordsController::class, 'store'])->name('medical-records.store');

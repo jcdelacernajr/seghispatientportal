@@ -25,4 +25,9 @@ class Notification extends Model
     {
          return $this->belongsTo(MedicalRecord::class, 'patient_id', 'patient_id');
     }
+
+    public function medicalRecordsFiles()
+    {
+        return $this->hasMany(MedicalRecord::class, 'patient_id', 'patient_id');
+    }
 }
