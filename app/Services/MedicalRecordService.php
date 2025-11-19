@@ -30,7 +30,15 @@ class MedicalRecordService
 
     public function createMedicalRecord(array $data)
     {
+        // Create the medical record
         $record = $this->medicalRecordRepo->create($data);
+
+        // Saving the uploaded files if any
+        $files = $data['medical_record_file'];
+
+        if (!empty($files)) {
+            $this->medicalRecordRepo->attachFiles($record, $files);
+        }
 
         // Create notification
         $this->notificationRepo->create([

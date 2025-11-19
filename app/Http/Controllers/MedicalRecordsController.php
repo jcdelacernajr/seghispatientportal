@@ -28,7 +28,12 @@ class MedicalRecordsController extends Controller
             'record_type' => 'required|string',
             'description' => 'required|string',
             'record_date' => 'required|date',
+            'medical_record_file'  => 'nullable|mimes:pdf|max:4096', // 4 MB
         ]);
+
+        $validated['medical_record_file'] = $request->file('medical_record_file');
+
+        // dd($validated);
 
         try {
             $this->service->createMedicalRecord($validated);

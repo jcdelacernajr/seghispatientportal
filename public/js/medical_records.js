@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
             table.ajax.reload();
 
             const successDiv = document.getElementById('medicalrecordSuccessMsg');
-            errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = response.message;
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
 
             // Fade out after 3 seconds
             setTimeout(() => {
