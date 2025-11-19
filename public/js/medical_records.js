@@ -126,6 +126,29 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 3000);
         }
     );
+
+    deleteRow(
+        '#patienMedicalRecordsTable', 
+        medicalRecordsRoutes.delete,
+        function(response){
+            table.ajax.reload();
+
+            const successDiv = document.getElementById('medicalrecordSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
+
+        },
+        function(errorMsg){
+            alert(errorMsg);
+        }
+    );
+
 });
 
 function clearForm() {

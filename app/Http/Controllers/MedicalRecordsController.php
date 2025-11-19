@@ -78,6 +78,22 @@ class MedicalRecordsController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        try {
+            $this->service->deleteMedicalRecord($id);
+
+            return response()->json([
+                'message' => 'Medical record deleted successfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to delete medical record.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function list(Request $request)
     { 
@@ -95,9 +111,31 @@ class MedicalRecordsController extends Controller
                 $buttons .= '<div class="ms-auto">';
                 if($user->hasAnyRole(['admin', 'doctor'])) {
                     $buttons .= '<button class="btn btn-sm btn-warning editMedicalRecord" data-id="' . $record->id . '">Edit</button> ';
-                    $buttons .= '<button class="btn btn-sm btn-danger deleteMedicalRecord" data-id="' . $record->id . '">Delete</button> ';
+                    $buttons .= '<button class="btn btn-sm btn-danger deleteBtn" data-id="' . $record->id . '">Delete</button> ';
                 }
-                $buttons .= '<button class="btn btn-primary btn-sm" data-id="' . $record->id . '">View</button>';
+
+                // Use this section of condition if we nned to view multiple files.
+                //if ($record->files && $record->files->count() > 0) {
+                //    foreach ($record->files as $file) {
+                //        $fileUrl = asset('storage/' . $file->file_path); // generate public URL
+                //        $buttons .= '<a href="' . $fileUrl . '" target="_blank" class="btn btn-primary btn-sm me-1">View</a>';
+                //    }
+                //} else {
+                //    $buttons .= '<span class="text-muted">No file</span>';
+                //}
+
+                // View only the latest uploaded file.
+                if ($record->files && $record->files->count() > 0) {
+                    // Get the latest file by creation date
+                    $latestFile = $record->files->sortByDesc('created_at')->first();
+
+                    $fileUrl = asset('storage/' . $latestFile->file_path); // generate public URL
+                    $buttons .= '<a href="' . $fileUrl . '" target="_blank" class="btn btn-primary btn-sm me-1">View</a>';
+                } else {
+                    $buttons .= '<span class="text-muted">No file</span>';
+                }
+
+
                 $buttons .= '</div>';
 
                 return $buttons;

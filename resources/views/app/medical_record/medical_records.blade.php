@@ -54,6 +54,7 @@
             store: "{{ route('medical-records.store') }}",
             show: "{{ route('medical-records.show', ':id') }}",
             update: "{{ route('medical-records.update') }}",
+            delete: "{{ route('medical-records.delete', ':id') }}",
         };
     </script>
     <script src="{{ asset('js/medical_records.js') }}"></script>

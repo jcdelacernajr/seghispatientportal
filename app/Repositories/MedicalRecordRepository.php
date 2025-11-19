@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\MedicalRecord;
+use Illuminate\Support\Facades\Storage;
 
 class MedicalRecordRepository
 {
@@ -26,7 +27,7 @@ class MedicalRecordRepository
         foreach ($uploadedFiles as $file) {
 
             // Store the file in storage/app/medical_records/
-            $path = $file->store('medical_records');
+            $path = $file->store('medical_records', 'public');
 
             $medicalRecord->files()->create([
                 'file_path' => $path,
@@ -37,7 +38,7 @@ class MedicalRecordRepository
         }
     }
 
-     public function find($id)
+    public function find($id)
     {
         return MedicalRecord::findOrFail($id);
     }
@@ -58,6 +59,20 @@ class MedicalRecordRepository
         }
 
         return $medicalRecord;
+    }
+
+    public function delete($medicalRecord)
+    {
+        // Delete associated files from storage and database
+        foreach ($medicalRecord->files as $file) {
+            if (Storage::exists($file->file_path)) {
+                Storage::delete($file->file_path); // delete file from storage
+            }
+            $file->delete(); // delete DB record
+        }
+
+        // Delete the medical record itself
+        $medicalRecord->delete();
     }
 
 }

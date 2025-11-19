@@ -103,5 +103,26 @@ class MedicalRecordService
         return $record;
     }
 
+    public function deleteMedicalRecord($id)
+    {
+        $record = $this->medicalRecordRepo->find($id);
+
+        if (!$record) {
+            throw new \Exception("Medical record not found.");
+        }
+
+        $this->medicalRecordRepo->delete($record);
+
+        // Optional: create a notification (if you want to notify patient)
+        // $this->notificationRepo->create([
+        //     'patient_id' => $record->patient_id,
+        //     'type' => 'info',
+        //     'message' => 'Your ' . $record->record_type . ' record has been deleted.',
+        //     'status' => 'Unread',
+        // ]);
+
+        return true;
+    }
+
 
 }
