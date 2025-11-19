@@ -42,7 +42,7 @@ class MedicalRecordsController extends Controller
     }
 
     public function list(Request $request)
-    {
+    { 
         $records = $this->service->getMedicalRecordsForDataTable($request);
 
         return DataTables::of($records)
@@ -50,7 +50,20 @@ class MedicalRecordsController extends Controller
             ->addColumn('record_type', fn($record) => $record->record_type)
             ->addColumn('description', fn($record) => $record->description)
             ->addColumn('record_date', fn($record) => date('M d, Y', strtotime($record->record_date)))
-            ->addColumn('action', fn($record) => '<button class="btn btn-primary btn-sm" data-id="' . $record->id . '">View</button>')
+            ->addColumn('action', function ($record) {
+                $buttons = '';
+                $user = auth()->user();
+
+                $buttons .= '<div class="ms-auto">';
+                if($user->hasAnyRole(['admin', 'doctor'])) {
+                    $buttons .= '<button class="btn btn-sm btn-warning editMedicalRecord" data-id="' . $record->id . '">Edit</button> ';
+                    $buttons .= '<button class="btn btn-sm btn-danger deleteMedicalRecord" data-id="' . $record->id . '">Delete</button> ';
+                }
+                $buttons .= '<button class="btn btn-primary btn-sm" data-id="' . $record->id . '">View</button>';
+                $buttons .= '</div>';
+
+                return $buttons;
+            })
             ->filter(function ($query) use ($request) {
                 // Global search
                 if ($search = $request->input('search.value')) {

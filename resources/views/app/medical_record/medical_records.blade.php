@@ -45,7 +45,7 @@
     </table>
     
     @include('app.medical_record.add_modal')
-    @include('app.medical_record.edit_modal')
+    @include('app.medical_record.edit_modal') 
 
     @push('scripts')
     <script>
