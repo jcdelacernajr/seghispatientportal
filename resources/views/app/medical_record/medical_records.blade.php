@@ -44,6 +44,21 @@
         <tbody></tbody>
     </table>
     
+    <!-- PDF Modal -->
+    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Medical Record PDF</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="pdfFrame" src="" frameborder="0" width="100%" height="600px"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @include('app.medical_record.add_modal')
     @include('app.medical_record.edit_modal') 
 

@@ -40,11 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(id)?.addEventListener('change', () => table.ajax.reload());
     });
 
-    const addModal = new bootstrap.Modal(document.getElementById('addMedicalRecordModal'));
-    document.getElementById('btnAddMedicalRecord').addEventListener('click', () => {
-        clearForm();
-        addModal.show();
-    });
+    const btnAddMedicalRecord = document.getElementById('btnAddMedicalRecord');
+    if(btnAddMedicalRecord) {
+        btnAddMedicalRecord.addEventListener('click', () => {
+            clearForm();
+            addModal.show();
+        });
+    }
 
     ajaxFormSubmit(
         "#addMedicalRecorForm",
@@ -148,6 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
             alert(errorMsg);
         }
     );
+    
+
+    const pdfModal = new bootstrap.Modal(document.getElementById('pdfModal'));
+
+    document.querySelector('#patienMedicalRecordsTable tbody').addEventListener('click', function(e){
+        if(e.target && e.target.matches('.viewPdfBtn')){
+            let pdfUrl = e.target.getAttribute('data-pdf');
+            // console.log("PDF URL:", pdfUrl)
+            $('#pdfFrame').attr('src', pdfUrl);
+            pdfModal.show();
+        }
+    });
 
 });
 

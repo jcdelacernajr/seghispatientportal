@@ -49,13 +49,13 @@
                                 }
                             @endphp
                             @if($fileUrl)
-                                <button class="btn btn-primary btn-sm viewNotification" 
+                                <span class="badge bg-primary" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#pdfModal" 
                                         data-pdf="{{ $fileUrl }}" 
                                         data-id="{{ $notification->id }}">
                                       <i class="bi bi-eye"></i> View
-                                </button>
+                                </span>
                             @else
                                 <span class="badge bg-secondary">No file</span>
                             @endif

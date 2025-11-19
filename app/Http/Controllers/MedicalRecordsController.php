@@ -130,7 +130,14 @@ class MedicalRecordsController extends Controller
                     $latestFile = $record->files->sortByDesc('created_at')->first();
 
                     $fileUrl = asset('storage/' . $latestFile->file_path); // generate public URL
-                    $buttons .= '<a href="' . $fileUrl . '" target="_blank" class="btn btn-primary btn-sm me-1">View</a>';
+                   // $buttons .= '<a href="' . $fileUrl . '" target="_blank" class="btn btn-primary btn-sm me-1">View</a>';
+
+                     $buttons .= '<button 
+                        class="btn btn-primary btn-sm viewPdfBtn me-1"
+                        data-pdf="' . $fileUrl . '">
+                        <i class="bi bi-eye me-1"></i>View
+                    </button>';
+
                 } else {
                     $buttons .= '<span class="text-muted">No file</span>';
                 }
