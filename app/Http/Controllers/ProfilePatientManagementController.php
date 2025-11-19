@@ -36,7 +36,12 @@ class ProfilePatientManagementController extends Controller
         ]);
 
         try {
+            // Create patient profile
             $this->service->createPatient($validated);
+
+            // Create Admin and Doctor profiles if needed
+            // TODO ...
+
             return response()->json(['message' => 'Patient profile created successfully']);
         } catch (\Exception $e) {
             return response()->json([
