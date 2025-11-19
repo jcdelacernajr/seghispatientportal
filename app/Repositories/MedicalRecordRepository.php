@@ -36,4 +36,28 @@ class MedicalRecordRepository
             ]);
         }
     }
+
+     public function find($id)
+    {
+        return MedicalRecord::findOrFail($id);
+    }
+
+    public function updateRecord($medicalRecord)
+    {
+        // Update basic fields
+        $medicalRecord->update([
+            'patient_id'  => $medicalRecord->patient_id,
+            'record_type' => $medicalRecord->record_type,
+            'description' => $medicalRecord->description,
+            'record_date' => $medicalRecord->record_date,
+        ]);
+
+        // Attach new files if provided
+        if (!empty($data['medical_record_file'])) {
+            $this->attachFiles($medicalRecord, $data['files']);
+        }
+
+        return $medicalRecord;
+    }
+
 }

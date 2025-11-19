@@ -45,9 +45,8 @@
                         <input type="date" name="record_date" id="record_date" class="form-control"></input>
                     </div>
                     <div class="mb-3">
-                        <label>Upload PDF</label>
+                        <label>Upload PDF <small class="text-muted">(Only PDF files allowed.)</small></label>
                         <input type="file" name="medical_record_file" id="medical_record_file" class="form-control" accept="application/pdf">
-                        <small class="text-muted">Only PDF files allowed.</small>
                     </div>
                 </div>
 

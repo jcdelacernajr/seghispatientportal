@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
     Route::get('/medical-records/list', [MedicalRecordsController::class, 'list'])->name('medical-records.list');
     Route::post('/medical-records/store', [MedicalRecordsController::class, 'store'])->name('medical-records.store');
+    Route::get('/medical-records/{id}', [MedicalRecordsController::class, 'show'])->name('medical-records.show');
+    Route::post('/medical-records/update', [MedicalRecordsController::class, 'update'])->name('medical-records.update');
 
     Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
     Route::get('/appointments/list', [AppointmentsController::class, 'list'])->name('appointments.list');

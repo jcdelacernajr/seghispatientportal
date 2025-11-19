@@ -33,8 +33,6 @@ class MedicalRecordsController extends Controller
 
         $validated['medical_record_file'] = $request->file('medical_record_file');
 
-        // dd($validated);
-
         try {
             $this->service->createMedicalRecord($validated);
             return response()->json(['message' => 'Medical record created successfully!']);
@@ -45,6 +43,41 @@ class MedicalRecordsController extends Controller
             ], 500);
         }
     }
+
+    public function show($id)
+    {
+        $data = $this->service->getMedicalRecord($id);
+        return response()->json($data);
+    }
+
+    public function update(Request $request)
+    {
+        $validated = $request->validate([
+            'patient_id'   => 'required|integer',
+            'record_type'  => 'required|string',
+            'description'  => 'required|string',
+            'record_date'  => 'required|date',
+            'medical_record_file'  => 'nullable|mimes:pdf|max:4096', // 4 MB
+        ]);
+
+        $validated['medical_record_id'] = $request->input('medical_record_id');
+        $validated['medical_record_file'] = $request->file('medical_record_file'); // Attach uploaded files
+
+        try {
+            $record = $this->service->updateMedicalRecord($validated);
+
+            return response()->json([
+                'message' => 'Medical record updated successfully.',
+                'record' => $record
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update medical record.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function list(Request $request)
     { 

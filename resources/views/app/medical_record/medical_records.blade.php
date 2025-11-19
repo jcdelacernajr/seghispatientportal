@@ -25,7 +25,7 @@
         </div>
         @if(auth()->check() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('doctor')))
         <div class="col-md-3 d-flex flex-column">
-            <button class="btn btn-primary" id="btnAddMedicalRecord">Add Record</button> 
+            <button class="btn btn-primary" id="btnAddMedicalRecord">Add Medical Record</button> 
         </div>
         @endif
     </div>
@@ -52,6 +52,8 @@
         window.medicalRecordsRoutes = {
             list: "{{ route('medical-records.list') }}",
             store: "{{ route('medical-records.store') }}",
+            show: "{{ route('medical-records.show', ':id') }}",
+            update: "{{ route('medical-records.update') }}",
         };
     </script>
     <script src="{{ asset('js/medical_records.js') }}"></script>

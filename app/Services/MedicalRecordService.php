@@ -64,4 +64,44 @@ class MedicalRecordService
 
         return $records;
     }
+
+    public function getMedicalRecord($id)
+    {
+        return $this->medicalRecordRepo->find($id);
+    }
+
+   public function updateMedicalRecord(array $data)
+    {
+        // Find the medical record
+        $record = $this->medicalRecordRepo->find($data['medical_record_id']);
+
+        if (!$record) {
+            throw new \Exception("Medical record not found.");
+        }
+
+        // Update the record fields
+        $record->update([
+            'patient_id'  => $data['patient_id'],
+            'record_type' => $data['record_type'],
+            'description' => $data['description'],
+            'record_date' => $data['record_date'],
+        ]);
+
+        // Attach new file if provided
+        if (!empty($data['medical_record_file'])) {
+            $this->medicalRecordRepo->attachFiles($record, $data['medical_record_file']);
+        }
+
+        // Optional: create a new notification (if you want to notify patient on update)
+        $this->notificationRepo->create([
+            'patient_id' => $data['patient_id'],
+            'type' => 'info',
+            'message' => 'Your ' . $data['record_type'] . ' result has been updated.',
+            'status' => 'Unread',
+        ]);
+
+        return $record;
+    }
+
+
 }
