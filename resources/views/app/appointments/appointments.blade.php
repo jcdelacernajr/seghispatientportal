@@ -1,6 +1,7 @@
 <x-layouts.app title="Appointments">
 
     <h2 class="mb-3">Patient Appointments</h2>
+    <div id="appointmentSuccessMsg" class="alert alert-success d-none"></div>
 
     @if(auth()->check() && (auth()->user()->hasRole('patient')))
     <div class="d-flex justify-content-end">

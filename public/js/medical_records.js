@@ -54,14 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
             addModal.hide();
             table.ajax.reload();
 
-            const errorDiv = document.getElementById('medicalrecordSuccessMsg');
+            const successDiv = document.getElementById('medicalrecordSuccessMsg');
             errorDiv.classList.remove('d-none');
             errorDiv.innerHTML = response.message;
 
             // Fade out after 3 seconds
             setTimeout(() => {
-                errorDiv.classList.add('d-none');
-                errorDiv.innerText = '';
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
             }, 3000);
         },
         function (error) {  
