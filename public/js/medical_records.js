@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(id)?.addEventListener('change', () => table.ajax.reload());
     });
 
+    const addModal = new bootstrap.Modal(document.getElementById('addMedicalRecordModal'));
     const btnAddMedicalRecord = document.getElementById('btnAddMedicalRecord');
     if(btnAddMedicalRecord) {
         btnAddMedicalRecord.addEventListener('click', () => {
