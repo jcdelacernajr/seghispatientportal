@@ -36,7 +36,7 @@ class MedicalRecordsController extends Controller
         Notification::create([
             'patient_id' => $request->patient_id, // send to patient
             'type' => 'info',
-            'message' => 'Your '. $validated['record_type'] .' result has been added.',
+            'message' => 'Your '. $validated['record_type'] .' result is available.',
             'status' => 'Unread',
         ]);
 
@@ -54,7 +54,7 @@ class MedicalRecordsController extends Controller
 
        // dd(auth()->user()->role);
        // Sort by latest first
-        $records = $records->orderBy('created_at', 'desc')->get();
+        $records->orderBy('created_at', 'desc')->get();
 
         return DataTables::of($records)
             ->addColumn('name', function ($record) {
