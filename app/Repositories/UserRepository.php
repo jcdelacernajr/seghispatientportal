@@ -32,4 +32,11 @@ class UserRepository
         ->with('roles')
         ->orderBy('id', 'desc');
     }
+
+    public function getPatients()
+    {
+        return User::whereHas('roles', function ($q) {
+            $q->where('name', 'Patient');
+        })->with('patient')->get();
+    }
 }

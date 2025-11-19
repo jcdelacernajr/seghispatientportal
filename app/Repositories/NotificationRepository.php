@@ -13,4 +13,9 @@ class NotificationRepository
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    public function create(array $data)
+    {
+        return Notification::create($data);
+    }
 }

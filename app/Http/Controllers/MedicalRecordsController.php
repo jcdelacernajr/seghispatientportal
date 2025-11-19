@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\MedicalRecord;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\User;
-use App\Models\Notification;
-use Illuminate\Auth\Events\Validated;
+use App\Services\MedicalRecordService;
 
 class MedicalRecordsController extends Controller
 {
+    protected $service;
+
+    public function __construct(MedicalRecordService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-         $patients = User::whereHas('roles', function($q) {
-            $q->where('name', 'Patient');
-        })
-        ->with('patient')
-        ->get();
-
+        $patients = $this->service->getAllPatients();
         return view('app.medical_record.medical_records', compact('patients'));
     }
 
@@ -31,60 +30,39 @@ class MedicalRecordsController extends Controller
             'record_date' => 'required|date',
         ]);
 
-        MedicalRecord::create($validated);
-
-        Notification::create([
-            'patient_id' => $request->patient_id, // send to patient
-            'type' => 'info',
-            'message' => 'Your '. $validated['record_type'] .' result is available.',
-            'status' => 'Unread',
-        ]);
-
-        return response()->json(['message' => 'Medical record created successfully!']);
+        try {
+            $this->service->createMedicalRecord($validated);
+            return response()->json(['message' => 'Medical record created successfully!']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to create medical record',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function list(Request $request)
     {
-        $records = MedicalRecord::with('patient');
-
-        // Restrict to logged-in patient's own records
-        if (auth()->user()->hasRole('patient')) {
-            $records->where('patient_id', auth()->user()->patient->id ?? 0);
-        }
-
-       // dd(auth()->user()->role);
-       // Sort by latest first
-        $records->orderBy('created_at', 'desc')->get();
+        $records = $this->service->getMedicalRecordsForDataTable($request);
 
         return DataTables::of($records)
-            ->addColumn('name', function ($record) {
-                return $record->patient->name ?? 'N/A';
-            })
-            ->addColumn('record_type', function ($record) {
-                return $record->record_type;
-            })
-            ->addColumn('description', function ($record) {
-                return $record->description;
-            })
-            ->addColumn('record_date', function ($record) {
-                return date('M d, Y', strtotime($record->record_date));
-            })
-            ->addColumn('action', function ($record) {
-                return '<button class="btn btn-primary btn-sm" data-id="' . $record->id . '">View</button>';
-            })
-             ->filter(function ($query) use ($request) {
-                // Global search filter
+            ->addColumn('name', fn($record) => $record->patient->name ?? 'N/A')
+            ->addColumn('record_type', fn($record) => $record->record_type)
+            ->addColumn('description', fn($record) => $record->description)
+            ->addColumn('record_date', fn($record) => date('M d, Y', strtotime($record->record_date)))
+            ->addColumn('action', fn($record) => '<button class="btn btn-primary btn-sm" data-id="' . $record->id . '">View</button>')
+            ->filter(function ($query) use ($request) {
+                // Global search
                 if ($search = $request->input('search.value')) {
                     $query->where(function ($q) use ($search) {
                         $q->where('record_type', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%")
-                        ->orWhereHas('patient', function ($q2) use ($search) {
-                            $q2->where('name', 'like', "%{$search}%")
-                                ->orWhere('email', 'like', "%{$search}%");
-                        });
+                            ->orWhere('description', 'like', "%{$search}%")
+                            ->orWhereHas('patient', function ($q2) use ($search) {
+                                $q2->where('name', 'like', "%{$search}%")
+                                    ->orWhere('email', 'like', "%{$search}%");
+                            });
                     });
                 }
-
                 // Date range filter
                 if ($start = $request->input('start_date')) {
                     $query->whereDate('record_date', '>=', $start);
