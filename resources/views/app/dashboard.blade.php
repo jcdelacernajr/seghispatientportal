@@ -12,10 +12,10 @@
             @foreach($appointments as $appt)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong>{{ date('M d, Y', strtotime($appt->appointment_date)) }}</strong> 
-                        - {{ $appt->title ?? 'No title' }}
-                        <span class="badge bg-primary rounded-pill">
-                             {{ date('H:i A', strtotime($appt->appointment_time)) }}
+                        {{ $appt->patient->name ?? 'No patient' }} - {{ $appt->title ?? 'No title' }}
+                            <span class="badge bg-primary">
+                                {{ date('M d, Y', strtotime($appt->appointment_date)) }}
+                                {{ date('H:i A', strtotime($appt->appointment_time)) }}
                         </span>
                     </div>
                 </li>
