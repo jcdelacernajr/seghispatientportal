@@ -148,4 +148,4 @@
     <script src="{{ asset('js/profile_patient_management.js') }}"></script>
     @endpush
 
-</x-layouts.app>
+</x-layouts.app> 

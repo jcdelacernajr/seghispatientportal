@@ -49,18 +49,16 @@ class AppointmentsController extends Controller
                 return '<div class="d-flex align-items-center">' . $statusText . $buttons . '</div>';
             })
             ->addColumn('action', function ($appt) {
-                // Only show buttons if status is NOT confirmed
-                if ($appt->status !== 'Confirmed') {
+                if ($appt->status === 'Confirmed') {
+                    return '...';
+                } else if ($appt->status === 'Cancelled') {
+                    return '<button class="btn btn-sm btn-danger deleteBtn" data-id="' . $appt->id . '">Delete</button>';
+                } else if ($appt->status === 'Pending') {
                     return '
                         <button class="btn btn-sm btn-warning editAppointment" data-id="' . $appt->id . '">Edit</button>
                         <button class="btn btn-sm btn-danger deleteBtn" data-id="' . $appt->id . '">Delete</button>
                     ';
-                } else {
-                    return '...';
                 }
-
-                // If confirmed, return empty string
-                return '';
             })
             ->filter(function ($query) {
                 if ($search = request('search')['value'] ?? false) {
