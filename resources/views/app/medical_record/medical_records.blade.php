@@ -1,6 +1,7 @@
 <x-layouts.app title="Medical records">
 
     <h2 class="mb-4">Patient Medical Records</h2>
+    <div id="medicalrecordSuccessMsg" class="alert alert-success d-none"></div>
 
     <div class="row mb-3 align-items-end">
         <div class="col-md-3 d-flex flex-column">
@@ -22,9 +23,11 @@
                 <option value="Ultrasound">Ultrasound</option>
             </select>
         </div>
+        @if(auth()->check() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('doctor')))
         <div class="col-md-3 d-flex flex-column">
             <button class="btn btn-primary" id="btnAddMedicalRecord">Add Record</button> 
         </div>
+        @endif
     </div>
     
     <table class="table table-bordered" id="patienMedicalRecordsTable">
@@ -48,6 +51,7 @@
     <script>
         window.medicalRecordsRoutes = {
             list: "{{ route('medical-records.list') }}",
+            store: "{{ route('medical-records.store') }}",
         };
     </script>
     <script src="{{ asset('js/medical_records.js') }}"></script>

@@ -18,8 +18,22 @@ class MedicalRecordsController extends Controller
         ->get();
 
         return view('app.medical_record.medical_records', compact('patients'));
+    }
 
-      //  return view('app.medical_record.medical_records');
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'patient_id' => 'required',
+            'record_type' => 'required|string',
+            'description' => 'required|string',
+            'record_date' => 'required|date',
+        ]);
+
+        MedicalRecord::create($validated);
+
+        
+
+        return response()->json(['message' => 'Medical record created successfully!']);
     }
 
     public function list(Request $request)
@@ -32,6 +46,8 @@ class MedicalRecordsController extends Controller
         }
 
        // dd(auth()->user()->role);
+       // Sort by latest first
+        $records = $records->orderBy('created_at', 'desc')->get();
 
         return DataTables::of($records)
             ->addColumn('name', function ($record) {

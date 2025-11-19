@@ -18,20 +18,21 @@
                         <select name="patient_id" id="patient_id" class="form-control" required>
                             <option value="">Select Patient</option>
                             @foreach($patients as $patient)
-                            <option value="{{ $patient->id }}">{{ $patient->patient->name }}</option>
+                            <option value="{{ $patient->patient->id }}">{{ $patient->patient->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
-
-                    <div class="mb-3">
-                        <label>Name</label>
-                        <input type="text" name="name" id="name" class="form-control" required>
-                    </div>
-
                     <div class="mb-3">
                         <label>Record Type</label>
-                        <input type="text" name="record_type" id="record_type" class="form-control" required>
+                        <select name="record_type" id="record_type" class="form-select">
+                            <option value="">All</option>
+                            <option value="X-ray">X-ray</option>
+                            <option value="Physical Exam">Physical Exam</option>
+                            <option value="Lab Result">Lab Result</option>
+                            <option value="Vaccination">Vaccination</option>
+                            <option value="Ultrasound">Ultrasound</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">

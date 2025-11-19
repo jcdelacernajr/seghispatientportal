@@ -40,13 +40,42 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(id)?.addEventListener('change', () => table.ajax.reload());
     });
 
-    const modal = new bootstrap.Modal(document.getElementById('addMedicalRecordModal'));
+    const addModal = new bootstrap.Modal(document.getElementById('addMedicalRecordModal'));
     document.getElementById('btnAddMedicalRecord').addEventListener('click', () => {
         clearForm();
-        modal.show();
+        addModal.show();
     });
 
-    
+    ajaxFormSubmit(
+        "#addMedicalRecorForm",
+        medicalRecordsRoutes.store,
+        "POST",
+        function (response) {
+            addModal.hide();
+            table.ajax.reload();
+
+            const errorDiv = document.getElementById('medicalrecordSuccessMsg');
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+                errorDiv.innerText = '';
+            }, 3000);
+        },
+        function (error) {  
+            const errorDiv = document.getElementById('medicalrecordErrorMsg');
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = error;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+                errorDiv.innerText = '';
+            }, 3000);
+        }
+    );
 
 });
 
