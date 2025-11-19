@@ -3,33 +3,37 @@
     <h2>Welcome</h2>
     <p>Your email: {{ auth()->user()->email }}</p>
 
-    <section id="core-functionalities">
+    <section id="core-functionalities" class="mb-5">
         <h2>Upcoming Appointments</h2>
         @if($appointments->isEmpty())
         <p>No upcoming appointments.</p>
         @else
-        <ul>
+        <ul class="list-group">
             @foreach($appointments as $appt)
-            <li>
-                {{ date('M d, Y', strtotime($appt->appointment_date)) }} {{ date('H:i', strtotime($appt->appointment_time)) }} 
-                - {{ $appt->title ?? 'No title' }}
-            </li>
-
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ date('M d, Y', strtotime($appt->appointment_date)) }}</strong> 
+                        - {{ $appt->title ?? 'No title' }}
+                        <span class="badge bg-primary rounded-pill">
+                             {{ date('H:i A', strtotime($appt->appointment_time)) }}
+                        </span>
+                    </div>
+                </li>
             @endforeach
         </ul>
+
         @endif
     </section>
 
     <section id="core-functionalities">
         <h2>Notifications</h2>
-        @if($appointments->isEmpty())
+        @if($notifications->isEmpty())
         <p>No Notifications.</p>
         @else
-        <ul>
-            @foreach($appointments as $appt)
-            <li>
-                {{ date('M d, Y', strtotime($appt->appointment_date)) }} {{ date('H:i', strtotime($appt->appointment_time)) }} 
-                - {{ $appt->title ?? 'No title' }}
+        <ul class="list-group">
+            @foreach($notifications as $notification)
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>{{ $notification->message }}</div>
             </li>
 
             @endforeach

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\MedicalRecord;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\User;
+use App\Models\Notification;
+use Illuminate\Auth\Events\Validated;
 
 class MedicalRecordsController extends Controller
 {
@@ -31,7 +33,12 @@ class MedicalRecordsController extends Controller
 
         MedicalRecord::create($validated);
 
-        
+        Notification::create([
+            'patient_id' => $request->patient_id, // send to patient
+            'type' => 'info',
+            'message' => 'Your '. $validated['record_type'] .' result has been added.',
+            'status' => 'Unread',
+        ]);
 
         return response()->json(['message' => 'Medical record created successfully!']);
     }

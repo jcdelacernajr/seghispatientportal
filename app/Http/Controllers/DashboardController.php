@@ -21,11 +21,22 @@ class DashboardController extends Controller
         if ($user->hasRole('patient')) {
             // Patient sees only their own appointments
             $query->where('user_id', $user->id);
+
+            
         }
 
         // Get results (limit 5 for dashboard)
         $appointments = $query->take(5)->get();
-        // return view('dashboard', compact('user', 'appointments', 'notifications'));
-        return view('app.dashboard', compact('user', 'appointments'));
+
+        // Fetch notifications only if user is a patient
+        $notifications = collect(); // default empty collection
+        if ($user->hasRole('patient')) {
+            $notifications = Notification::where('patient_id', $user->patient->id ?? 0)
+                ->where('status', 'Unread')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        return view('app.dashboard', compact('user', 'appointments', 'notifications'));
     }
 }
