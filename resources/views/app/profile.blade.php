@@ -3,6 +3,10 @@
     <h2 class="mb-4">Welcome!</h2>
     <p>Your email: {{ auth()->user()->email }}</p>
     <p>Your role: {{ auth()->user()->roles[0]->name }}</p>
+    @if(auth()->check() && (auth()->user()->hasRole('patient')))
+    <p>Name: {{ auth()->user()->patient->name }}</p>
+    @endif
+    
 
     <p>Here is your profile information. You can update it below:</p>
 
@@ -16,7 +20,7 @@
             <input type="email" name="email" id="email" value="{{ auth()->user()->email }}" class="form-control" required>
         </div>
 
-       <!-- <div class="mb-3">
+       <!-- <div class="mb-3"> 
             <label for="phone" class="form-label">Phone Number</label>
             <input type="text" name="phone" id="phone" value="{{ auth()->user()->phone ?? '' }}" class="form-control">
         </div>
