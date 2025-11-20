@@ -3,6 +3,14 @@
 This Laravel application follows **MVC + Clean Architecture principles**, separating concerns into **Controllers**, **Services**, and **Repositories**. This ensures the codebase is modular, maintainable, and testable.
 
 ---
+## Requirements
+
+- PHP 8.0.30
+- Composer 2.8.12
+- Laravel 9.52.21
+- **Database:** MariaDB 11.7.2
+
+---
 
 ## 🏛️ Traditional MVC Architecture
 <img width="565" height="476" alt="image" src="https://github.com/user-attachments/assets/f5449d93-cb30-4fa6-afbb-03626ac7ec08" />
