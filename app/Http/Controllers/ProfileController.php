@@ -17,11 +17,22 @@ class ProfileController extends Controller
     {
         try {
             $user = Auth::user();
-            $request->validate([
-                'name' => 'required|string|max:50',
+            // Get user roles
+            $isAdminOrDoctor = $user->hasAnyRole(['admin', 'doctor']);
+
+            // Validation rules
+            $rules = [
                 'email' => 'required|email|max:50|unique:users,email,' . $user->id,
                 'password' => 'nullable|min:6|confirmed',
-            ]);
+            ];
+
+            // Only require 'name' if user is NOT admin or doctor (i.e., is patient)
+            if (!$isAdminOrDoctor) {
+                $rules['name'] = 'required|string|max:50';
+            }
+
+            // Validate the input data
+            $request->validate($rules);
 
             $user->email = $request->email;
             if ($request->filled('password')) {
@@ -29,10 +40,13 @@ class ProfileController extends Controller
                 $user->password = Hash::make($request->password);
             }
 
+            // Save the user record
             $user->save();
 
-            $patient = $user->patient;
-            if ($patient) {
+            // TODO 
+            // Only update patient info if the user has a patient record
+            if (!$isAdminOrDoctor && $user->patient) {
+                $patient = $user->patient;
                 $patient->name = $request->name;
                 $patient->email = $request->email;
                 $patient->save();

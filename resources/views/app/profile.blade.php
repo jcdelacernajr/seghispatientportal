@@ -40,10 +40,13 @@
                 @csrf
                 <div class="body">
                     <div id="updateUserResponseMsg" class="alert alert-danger d-none"></div>
+
+                    @if(auth()->check() && (auth()->user()->hasRole('patient')))
                     <div class="mb-3">
                         <label>Name</label>
                         <input type="text" name="name" id="name" value="{{ auth()->user()->patient->name }}" class="form-control" required>
                     </div>
+                    @endif
 
                     <div class="mb-3">
                         <label>Email/Username</label>
