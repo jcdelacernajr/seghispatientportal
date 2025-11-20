@@ -4,7 +4,12 @@ This Laravel application follows **MVC + Clean Architecture principles**, separa
 
 ---
 
-## 📂 MVC + Clean Architecture
+## 🏛️ Traditional MVC Architecture
+<img width="565" height="476" alt="image" src="https://github.com/user-attachments/assets/f5449d93-cb30-4fa6-afbb-03626ac7ec08" />
+
+---
+
+## 🏛️ MVC + Clean Architecture
 <img width="543" height="733" alt="image" src="https://github.com/user-attachments/assets/3a2c17e1-e776-4d05-bf36-89995d435463" />
 
 ---
