@@ -49,7 +49,8 @@
                                 }
                             @endphp
                             @if($fileUrl)
-                                <span class="badge bg-primary" 
+                                <span style="cursor: pointer"
+                                        class="badge bg-primary" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#pdfModal" 
                                         data-pdf="{{ $fileUrl }}" 
