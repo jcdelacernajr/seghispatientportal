@@ -54,6 +54,9 @@ class AppointmentService
     public function changeStatus($id, string $status)
     {
         $appointment = $this->appointmentRepo->find($id);
+        if (!$appointment) {
+            throw new \Exception("Appointment not found");
+        }
         $appointment->status = $status;
         $appointment->save();
         return $appointment;
