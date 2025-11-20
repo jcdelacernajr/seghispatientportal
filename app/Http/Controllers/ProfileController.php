@@ -36,7 +36,6 @@ class ProfileController extends Controller
 
             $user->email = $request->email;
             if ($request->filled('password')) {
-                //$user->password = bcrypt($request->password);
                 $user->password = Hash::make($request->password);
             }
 
