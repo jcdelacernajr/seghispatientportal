@@ -52,12 +52,12 @@
 
                     <div class="mb-3">
                         <label>Password</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="..." required>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="...">
                     </div>
 
                     <div class="mb-3">
                         <label>Confirm Password</label> 
-                        <input type="password" name="password_confirmation" class="form-control" placeholder="..." required>
+                        <input type="password" name="password_confirmation" class="form-control" placeholder="...">
                     </div>
 
                 </div>
