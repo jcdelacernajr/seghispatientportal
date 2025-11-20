@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -14,23 +15,35 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $request->validate([
+                'name' => 'required|string|max:50',
+                'email' => 'required|email|max:50|unique:users,email,' . $user->id,
+                'password' => 'required|min:6|confirmed',
+            ]);
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
-        ]);
+            $user->email = $request->email;
+            if ($request->filled('password')) {
+                //$user->password = bcrypt($request->password);
+                $user->password = Hash::make($request->password);
+            }
 
-       // $user->update($request->only('name', 'email', 'phone', 'address'));
+            $user->save();
 
-        // Return JSON response for AJAX
-        return response()->json(['message' => 'Profile updated successfully!']);
+            $patient = $user->patient;
+            if ($patient) {
+                $patient->name = $request->name;
+                $patient->email = $request->email;
+                $patient->save();
+            }
+
+            return response()->json(['message' => 'Profile updated successfully!']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update profile record.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-
-    public function edit()
-    {
-       
-    } 
 }

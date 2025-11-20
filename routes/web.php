@@ -60,8 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/appointments/confirm/{id}', [AppointmentsController::class, 'confirm'])->name('appointments.confirm');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
 
      // Profile-management only for admin and doctor
