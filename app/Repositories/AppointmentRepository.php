@@ -33,7 +33,7 @@ class AppointmentRepository
         return Appointment::destroy($id);
     }
 
-    public function getUpcommingAppointmentsForUser($user, $limit = 5)
+    public function getUpcommingAppointmentsForUser($user, $limit = 10)
     {
         $query = Appointment::where('status', 'Confirmed')
             ->with('patient')
