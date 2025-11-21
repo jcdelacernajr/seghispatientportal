@@ -11,6 +11,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePatientManagementController;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,6 +75,27 @@ Route::middleware('auth')->group(function () {
         Route::delete('profile-patient-management/delete/{id}', [ProfilePatientManagementController::class, 'delete'])->name('profile-patient-management.delete');
         Route::get('profile-patient-management/patient/{id}', [ProfilePatientManagementController::class, 'patient'])->name('profile-patient-management.patient');
         Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
+    });
+
+        
+    Route::get('/check-db', function () {
+        try {
+            DB::connection()->getPdo();
+            return 'Database connection is OK';
+        } catch (\Exception $e) {
+            return 'Database connection failed: ' . $e->getMessage();
+        }
+    });
+
+    Route::get('/check-files', function () {
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(base_path()));
+        $list = [];
+        foreach ($files as $file) {
+            if ($file->isFile()) {
+                $list[] = str_replace(base_path().'/', '', $file->getPathname());
+            }
+        }
+        return '<pre>' . implode("\n", $list) . '</pre>';
     });
     
 });
