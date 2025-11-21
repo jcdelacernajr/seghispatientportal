@@ -38,6 +38,27 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
+
+    Route::get('/check-db', function () {
+        try {
+            DB::connection()->getPdo();
+            return 'Database connection is OK';
+        } catch (\Exception $e) {
+            return 'Database connection failed: ' . $e->getMessage();
+        }
+    });
+
+    Route::get('/check-files', function () {
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(base_path()));
+        $list = [];
+        foreach ($files as $file) {
+            if ($file->isFile()) {
+                $list[] = str_replace(base_path().'/', '', $file->getPathname());
+            }
+        }
+        return '<pre>' . implode("\n", $list) . '</pre>';
+    });
+    
 });
 
 // Authenticated routes
@@ -77,25 +98,4 @@ Route::middleware('auth')->group(function () {
         Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
     });
 
-        
-    Route::get('/check-db', function () {
-        try {
-            DB::connection()->getPdo();
-            return 'Database connection is OK';
-        } catch (\Exception $e) {
-            return 'Database connection failed: ' . $e->getMessage();
-        }
-    });
-
-    Route::get('/check-files', function () {
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(base_path()));
-        $list = [];
-        foreach ($files as $file) {
-            if ($file->isFile()) {
-                $list[] = str_replace(base_path().'/', '', $file->getPathname());
-            }
-        }
-        return '<pre>' . implode("\n", $list) . '</pre>';
-    });
-    
 });
