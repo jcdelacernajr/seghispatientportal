@@ -46,9 +46,9 @@ ENV DB_NAME=seghis_patient_portal
 CMD ["sh", "-c", "\
     mysqld_safe & \
     sleep 5 && \
-    mysql -u root -e \"CREATE DATABASE IF NOT EXISTS seghis_patient_portal;\" && \
-    mysql -u root -e \"CREATE USER IF NOT EXISTS 'seghis_user'@'%' IDENTIFIED BY 'seghis_pass';\" && \
-    mysql -u root -e \"GRANT ALL PRIVILEGES ON seghis_patient_portal.* TO 'seghis_user'@'%'; FLUSH PRIVILEGES;\" && \
-    mysql -u seghis_user -pseghis_pass seghis_patient_portal < /docker-entrypoint-initdb.d/seghis_patient_portal.sql && \
+    mysql -u root -e \"CREATE DATABASE IF NOT EXISTS ${DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\" && \
+    mysql -u root -e \"CREATE USER IF NOT EXISTS '${DB_USERNAME}'@'%' IDENTIFIED BY '${DB_PASSWORD}';\" && \
+    mysql -u root -e \"GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USERNAME}'@'%'; FLUSH PRIVILEGES;\" && \
+    mysql -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_NAME} < /docker-entrypoint-initdb.d/seghis_patient_portal.sql && \
     php -S 0.0.0.0:10000 -t public \
 "]
