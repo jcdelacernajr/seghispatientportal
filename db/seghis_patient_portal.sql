@@ -33,7 +33,7 @@ CREATE TABLE `appointments` (
   PRIMARY KEY (`id`),
   KEY `appointments_user_id_foreign` (`user_id`),
   CONSTRAINT `appointments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `appointments` */
 
@@ -61,7 +61,9 @@ insert  into `appointments`(`id`,`user_id`,`title`,`appointment_date`,`appointme
 (29,46,'Checkup','2025-12-01','08:30:00','For general checkup','Cancelled','2025-11-19 05:37:27','2025-11-19 05:48:54'),
 (30,46,'PEME','2025-11-29','10:30:00','x-ray and Physical Exam','Cancelled','2025-11-19 05:42:51','2025-11-19 05:48:36'),
 (34,46,'Check up','2025-11-29','13:54:00','Cancel','Confirmed','2025-11-19 05:51:02','2025-11-19 05:53:04'),
-(36,46,'test','2025-11-21','09:33:00','teset atasdfg saddsadgasgasdfg  agadf','Confirmed','2025-11-19 09:29:55','2025-11-19 09:30:13');
+(36,46,'test','2025-11-21','09:33:00','teset atasdfg saddsadgasgasdfg  agadf','Confirmed','2025-11-19 09:29:55','2025-11-19 09:30:13'),
+(37,46,'PEME','2025-11-22','08:30:00','X-ray and Physical Exam','Cancelled','2025-11-20 05:49:50','2025-11-20 06:48:51'),
+(38,46,'PEME TEST','2025-11-24','08:30:00','TEST TEST TEST','Pending','2025-11-20 06:49:26','2025-11-20 06:49:26');
 
 /*Table structure for table `failed_jobs` */
 
@@ -215,7 +217,7 @@ insert  into `notifications`(`id`,`patient_id`,`type`,`message`,`status`,`create
 (1,32,'info','Your X-ray result is now available.','Unread','2025-11-19 00:31:57','2025-11-19 00:31:57'),
 (2,18,'info','Your X-ray result is now available.','Unread','2025-11-19 03:24:56','2025-11-19 03:24:56'),
 (3,18,'info','Your Physical Exam result is available.','Unread','2025-11-19 03:27:41','2025-11-19 03:27:41'),
-(4,38,'info','Your Ultrasound result is now available.','Read','2025-11-19 05:25:22','2025-11-19 09:07:39'),
+(4,38,'info','Your Ultrasound result is now available.','Unread','2025-11-19 05:25:22','2025-11-20 06:00:36'),
 (5,18,'info','Your Physical Exam result is now available.','Unread','2025-11-19 05:39:55','2025-11-19 05:39:55'),
 (6,5,'info','Your Physical Exam result is now available.','Unread','2025-11-19 06:17:44','2025-11-19 06:17:44'),
 (7,18,'info','Your Vaccination result is now available.','Unread','2025-11-19 06:37:00','2025-11-19 06:37:00'),
@@ -237,8 +239,8 @@ insert  into `notifications`(`id`,`patient_id`,`type`,`message`,`status`,`create
 (23,18,'info','Your Vaccination result has been updated.','Unread','2025-11-19 08:01:16','2025-11-19 08:01:16'),
 (24,18,'info','Your X-ray result has been updated.','Unread','2025-11-19 08:03:23','2025-11-19 08:03:23'),
 (25,18,'info','Your X-ray result has been updated.','Unread','2025-11-19 08:03:43','2025-11-19 08:03:43'),
-(26,38,'info','Your Ultrasound result has been updated.','Read','2025-11-19 08:13:40','2025-11-19 09:07:52'),
-(27,38,'info','Your Ultrasound result has been updated.','Unread','2025-11-19 08:41:42','2025-11-19 08:48:49'),
+(26,38,'info','Your Ultrasound result has been updated.','Read','2025-11-19 08:13:40','2025-11-20 06:01:07'),
+(27,38,'info','Your Ultrasound result has been updated.','Read','2025-11-19 08:41:42','2025-11-20 06:01:02'),
 (28,18,'info','Your X-ray result has been updated.','Unread','2025-11-19 09:03:05','2025-11-19 09:03:05'),
 (29,18,'info','Your Physical Exam result has been updated.','Unread','2025-11-19 09:03:11','2025-11-19 09:03:11'),
 (30,18,'info','Your Physical Exam result has been updated.','Unread','2025-11-19 09:03:16','2025-11-19 09:03:16'),
@@ -290,8 +292,8 @@ insert  into `patients`(`id`,`user_id`,`name`,`email`,`phone`,`address`,`date_of
 (28,34,'Kairos Bennett','patient28@gmail.com','12344','Davao City',NULL,'2025-11-17 11:40:33','2025-11-18 08:10:46'),
 (29,35,'Sophie Langford','tpatient28@gmail.com','12344','qweqwe',NULL,'2025-11-17 13:55:19','2025-11-18 08:10:31'),
 (32,38,'Evan Mercer','lab123@gmail.com','12321321','Davao Citylab@gmail.com',NULL,'2025-11-17 15:24:51','2025-11-19 05:55:24'),
-(38,46,'Patient Name','lab@gmail.com','123213213','Davao City',NULL,'2025-11-19 05:17:32','2025-11-19 06:13:31'),
-(39,47,'Juan Ryu G. Dela Cerna','juanryu@gmail.com',NULL,NULL,NULL,'2025-11-19 09:13:40','2025-11-19 09:13:40');
+(38,46,'Juanito Jr. C. Dela Cerna','lab@gmail.com','123213213','Davao City',NULL,'2025-11-19 05:17:32','2025-11-20 05:35:02'),
+(39,47,'Juan Ryu G. Dela Cerna','juanryu@gmail.com','09207835717','Davao City',NULL,'2025-11-19 09:13:40','2025-11-20 05:45:16');
 
 /*Table structure for table `personal_access_tokens` */
 
@@ -389,20 +391,20 @@ CREATE TABLE `users` (
 
 insert  into `users`(`id`,`email`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values 
 (1,'admin@example.com',NULL,'$2y$10$co90Eb7WkMOdW9qeYY1lw.uCwQXpN2x4eBFyYpogrRWL0rDsn/CxW',NULL,'2025-11-16 21:02:51','2025-11-16 21:02:51'),
-(2,'jcdelacernajr@gmail.com',NULL,'$2y$10$UBpJBtISuiyOTFtXaFODPuyAfdP/PPs/Azt49NzjNR9gL8jz6zzg2',NULL,'2025-11-16 21:14:51','2025-11-16 21:14:51'),
+(2,'jcdelacernajr@gmail.com',NULL,'$2y$10$UBpJBtISuiyOTFtXaFODPuyAfdP/PPs/Azt49NzjNR9gL8jz6zzg2','9SmoNr1p078Cw6zkh1aNvuJYt4mdsW6OkedTa4jFNaBKURsUh8SPAF4R23PS','2025-11-16 21:14:51','2025-11-16 21:14:51'),
 (10,'t@gmail.com',NULL,'$2y$10$d66ed84OzGdSzKgVNwHmIe16omftU/X20S.boiWr7iACE5GoNdmkO',NULL,'2025-11-17 08:21:05','2025-11-17 16:25:15'),
 (11,'monday@gmail.com',NULL,'$2y$10$ZzHWW0xJzQlKacnCMVFXJ.Z5SyTQ9s9QsVlj1X8jd6.tzOkj6f4Cq',NULL,'2025-11-17 08:23:49','2025-11-17 16:47:15'),
 (12,'tuesday@gmail.com',NULL,'$2y$10$vP48qjePxyW2qdrcbpvwruPZH27.G.gXNeCFYjfuf6ACd6whChYjG',NULL,'2025-11-17 08:24:38','2025-11-17 16:47:39'),
 (24,'patient18@gmail.com',NULL,'$2y$10$NOM9yfrk/FpP3Xm8rj17YeWEcTZa/BKkaqq2FYVEGFId4nyYbmzg2',NULL,'2025-11-17 09:13:35','2025-11-18 08:11:43'),
-(29,'patien23@gmail.com',NULL,'$2y$10$Mb.SeozvivpOkphUWM0.jeJppMKLRz0DhSdd.XMzPjwmt1g9h0TgG',NULL,'2025-11-17 09:25:07','2025-11-19 02:34:43'),
+(29,'patien23@gmail.com',NULL,'$2y$10$zcCGEJ2AmXoN93W16pOMc.412/Qb8MprYeQy5GbGNUvmCIxOfjUHO',NULL,'2025-11-17 09:25:07','2025-11-20 05:44:47'),
 (31,'patient26@gmail.com',NULL,'$2y$10$mU4rxNigRsgi56dIIpehUuvFjGa9RGo7n9Dw/w9SeTkDwxuu8ktj2',NULL,'2025-11-17 10:06:18','2025-11-18 08:11:07'),
 (34,'patient28@gmail.com',NULL,'$2y$10$yDYB4MNQIDzll0tzlVdtQObzGb8KGrb1RdKO8E/EEaXGRABd72ODq',NULL,'2025-11-17 11:40:33','2025-11-18 08:10:46'),
 (35,'tpatient28@gmail.com',NULL,'$2y$10$XGFbciOnuMZZKozcGkWuMOIZ/BRLesbkSTDS8/h61L.MoL2EM1YWC',NULL,'2025-11-17 13:55:19','2025-11-18 08:10:31'),
 (38,'lab123@gmail.com',NULL,'$2y$10$LxUYGwzj/UZVAlbl7H5tTetkTLttYziOf3tP/74PP8avyy7PTrqL2',NULL,'2025-11-17 15:24:51','2025-11-19 05:55:24'),
 (43,'doctoruser@gmail.com',NULL,'$2y$10$xYhQdeKdWcoOXYTjvxpib.aLus5QmtcF9QUuWlU.btED2fhxzb0fC',NULL,'2025-11-19 02:51:00','2025-11-19 02:51:00'),
-(44,'seghisadmin@gmail.com',NULL,'$2y$10$nBtQbIL48Hf95r5cuUj6Nu2EGf8TLfEffLZkfTqQz6dThzRcZ./LW',NULL,'2025-11-19 02:52:17','2025-11-19 02:52:17'),
-(46,'lab@gmail.com',NULL,'$2y$10$D.tgRdEOXW0JX6cLXrM5oeu4nwo29msu8pNX/QrFZGyn.IubzHB.2',NULL,'2025-11-19 05:17:32','2025-11-19 06:14:17'),
-(47,'juanryu@gmail.com',NULL,'$2y$10$ejtFbxCmRgvynwnWV1pmnenBUqImkSPI/Aq1Qze7GEndIThd39pH2',NULL,'2025-11-19 09:13:40','2025-11-19 09:13:40');
+(44,'seghisadmin@gmail.com',NULL,'$2y$10$qEb1Z.8m05mGKaZ8tFJNx.fSWBjOEgWyHztyhKqB517m7Flc1W6/e','OT1vxEFKmMZF5exo8K99TJ2fBTdY3JodsB5y6MuzexRGKR51NdllpPGVi3Ly','2025-11-19 02:52:17','2025-11-20 05:33:47'),
+(46,'lab@gmail.com',NULL,'$2y$10$xj144w/BOLihgviS3QZn2eshuluhtLYtPOHIqSPuqdMVA2x4WIh7G',NULL,'2025-11-19 05:17:32','2025-11-20 05:34:50'),
+(47,'juanryu@gmail.com',NULL,'$2y$10$IhhuD7JODZ.QNgQyyTM8T.wEfmeON94ZRNA6OM./18yPIc5xW5OvS',NULL,'2025-11-19 09:13:40','2025-11-20 05:45:16');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
