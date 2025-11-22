@@ -39,6 +39,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
 
+    /* FOR TESTING
     Route::get('/check-db', function () {
         try {
             DB::connection()->getPdo();
@@ -58,6 +59,7 @@ Route::middleware('guest')->group(function () {
         }
         return '<pre>' . implode("\n", $list) . '</pre>';
     });
+    */
     
 });
 

@@ -4,6 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Patients;
 
+/**
+ *  Repository for managing patients.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class PatientRepository
 {
     public function createPatient(array $data)

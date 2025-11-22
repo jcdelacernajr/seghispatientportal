@@ -4,6 +4,11 @@ namespace App\Repositories;
 
 use App\Models\User;
 
+/**
+ *  Repository for managing users.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class UserRepository
 {
     public function createUser(array $data)

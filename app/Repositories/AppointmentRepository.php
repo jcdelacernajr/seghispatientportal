@@ -4,6 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Appointment;
 
+/**
+ *  Repository for managing appointments.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class AppointmentRepository
 {
      public function query()

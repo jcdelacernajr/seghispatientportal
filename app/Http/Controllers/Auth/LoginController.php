@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 // Laravel’s authentication features
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller handling user login.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class LoginController extends Controller
 {
     public function show()

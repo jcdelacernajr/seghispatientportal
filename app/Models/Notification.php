@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model representing a notification.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class Notification extends Model
 {
     use HasFactory;

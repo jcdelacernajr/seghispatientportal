@@ -9,6 +9,11 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Controller handling user registration.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class RegisterController extends Controller
 {
     public function show()
