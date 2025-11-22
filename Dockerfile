@@ -33,6 +33,11 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# CREATE LARAVEL STORAGE SYMLINK
+RUN php artisan storage:link || true
+# Fallback manual symlink if artisan fails (Render sometimes blocks symlink)
+RUN ln -sf /var/www/html/storage/app/public /var/www/html/public/storage || true
+
 # Expose ports for Laravel and MariaDB
 EXPOSE 10000 3306
 
