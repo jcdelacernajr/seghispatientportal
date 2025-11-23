@@ -129,11 +129,11 @@
                         <div class="row">
                             <div class="col-md mb-3">
                                 <label>Password</label>
-                                <input type="password" name="password" id="edit_password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="password" id="edit_password" class="form-control" placeholder="Password">
                             </div>
                             <div class="col-md mb-3">
                                 <label>Confirm Password</label>
-                                <input type="password" name="password_confirmation" id="edit_password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                                <input type="password" name="password_confirmation" id="edit_password_confirmation" class="form-control" placeholder="Confirm Password">
                             </div>
                         </div>
 

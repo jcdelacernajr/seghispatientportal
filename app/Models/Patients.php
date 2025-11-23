@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Run: php artisan make:model Patient
  */
+
+/**
+ * Model representing a patient.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class Patients extends Model
 {
     use HasFactory;

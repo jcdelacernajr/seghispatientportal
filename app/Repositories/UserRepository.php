@@ -4,6 +4,11 @@ namespace App\Repositories;
 
 use App\Models\User;
 
+/**
+ *  Repository for managing users.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class UserRepository
 {
     public function createUser(array $data)
@@ -38,5 +43,10 @@ class UserRepository
         return User::whereHas('roles', function ($q) {
             $q->where('name', 'Patient');
         })->with('patient')->get();
+    }
+
+    public function attachRole(User $user, int $roleId)
+    {
+        $user->roles()->attach($roleId);
     }
 }

@@ -7,6 +7,11 @@ use App\Repositories\NotificationRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ *  Service for managing medical records.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class MedicalRecordService
 {
     protected $medicalRecordRepo;

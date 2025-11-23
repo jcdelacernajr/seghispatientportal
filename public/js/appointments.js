@@ -18,6 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     );
 
+    // Function to get filter values
+    function getFilters() {
+        return {
+            start_date: document.getElementById('startDate')?.value || null,
+            end_date: document.getElementById('endDate')?.value || null,
+            status: document.getElementById('statusFilter')?.value || null,
+        };
+    }
+
+    // Override the internal Axios request to include filters
+    table.on('preXhr.dt', function (e, settings, data) {
+        const filters = getFilters();
+        data.start_date = filters.start_date;
+        data.end_date = filters.end_date;
+        data.status = filters.status;
+    });
+
+    // Reload table when filters change
+    ['startDate', 'endDate', 'statusFilter'].forEach(id => {
+        document.getElementById(id)?.addEventListener('change', () => table.ajax.reload());
+    });
+
     const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal')); 
     const btnAddAppointment = document.getElementById('btnAddAppointment');
     if(btnAddAppointment) {

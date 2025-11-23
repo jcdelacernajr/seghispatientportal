@@ -4,12 +4,15 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\MedicalRecordsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePatientManagementController;
 use Illuminate\Support\Facades\Route;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +38,29 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
+
+    /* FOR TESTING
+    Route::get('/check-db', function () {
+        try {
+            DB::connection()->getPdo();
+            return 'Database connection is OK';
+        } catch (\Exception $e) {
+            return 'Database connection failed: ' . $e->getMessage();
+        }
+    });
+
+    Route::get('/check-files', function () {
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(base_path()));
+        $list = [];
+        foreach ($files as $file) {
+            if ($file->isFile()) {
+                $list[] = str_replace(base_path().'/', '', $file->getPathname());
+            }
+        }
+        return '<pre>' . implode("\n", $list) . '</pre>';
+    });
+    */
+    
 });
 
 // Authenticated routes
@@ -73,5 +99,5 @@ Route::middleware('auth')->group(function () {
         Route::get('profile-patient-management/patient/{id}', [ProfilePatientManagementController::class, 'patient'])->name('profile-patient-management.patient');
         Route::get('profile-patient-management/list', [ProfilePatientManagementController::class, 'list'])->name('profile-patient-management.list');
     });
-    
+
 });

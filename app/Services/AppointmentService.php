@@ -6,6 +6,11 @@ use App\Repositories\AppointmentRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+/**
+ *  Service for managing appointments.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class AppointmentService
 {
     protected $appointmentRepo;
