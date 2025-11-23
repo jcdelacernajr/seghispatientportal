@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(res => {
                     const user = res.data;
                     document.getElementById('edit_user_id').value = user.id;
-                    document.getElementById('edit_name').value = user.patient?.name || user.name;
+                    document.getElementById('edit_name').value = user.patient?.name || "";
                     document.getElementById('edit_phone_no').value = user.patient?.phone || "";
-                    document.getElementById('edit_address').value = user.patient?.address || user.address;
-                    document.getElementById('edit_email').value = user.patient?.email || user.email;
+                    document.getElementById('edit_address').value = user.patient?.address || "";
+                    document.getElementById('edit_email').value = user.patient?.email || "";
                     document.getElementById('edit_role_id').value = user.roles[0]?.id || '';
                 });
         }

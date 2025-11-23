@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\MedicalRecordService;
 
+/**
+ * Controller managing medical records.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class MedicalRecordsController extends Controller
 {
     protected $service;

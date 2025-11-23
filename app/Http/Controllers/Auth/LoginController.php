@@ -3,13 +3,26 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\LoginService;
 use Illuminate\Http\Request;
 
 // Laravel’s authentication features
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller handling user login.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class LoginController extends Controller
 {
+    protected $service;
+
+    public function __construct(LoginService $service)
+    {
+        $this->service = $service;
+    }
+
     public function show()
     {
         return view('auth.login');
@@ -22,8 +35,9 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
+        if ($this->service->execute($credentials, $request->boolean('remember'))) {
+
+            $this->service->sessionRegenerate();
 
             return redirect()->intended(route('dashboard'))
                 ->with('success', 'Welcome!');
@@ -33,4 +47,5 @@ class LoginController extends Controller
             'email' => 'The provided credentials are incorrect.',
         ])->onlyInput('email'); // Repopulates email only
     }
+
 }

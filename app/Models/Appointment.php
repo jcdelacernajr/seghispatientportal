@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model representing an appointment.
+ * 
+ * @author Juanito Jr. Chavez Dela Cerna
+ */
 class Appointment extends Model
 {
     use HasFactory;
