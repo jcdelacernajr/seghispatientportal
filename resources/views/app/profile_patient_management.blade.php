@@ -39,6 +39,7 @@
                     <div id="responseAddMsg" class="alert d-none"></div>
                         @csrf
                         <div class="col-md mb-3">
+                            <label>Role</label>
                             <select name="role_id" class="form-control" required>
                                 <option value="">Select Role</option>
                                 @foreach($roles as $role)
@@ -47,22 +48,28 @@
                             </select>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Name</label>
                             <input type="text" name="name" class="form-control" placeholder="Name" required>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Phone No.</label>
                             <input type="text" name="phone_no" class="form-control" placeholder="Phone No" required>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Address</label>
                             <textarea name="address" class="form-control" placeholder="Address" required></textarea>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Email</label>
                             <input type="email" name="email" class="form-control" placeholder="Email" required>
                         </div>
                         <div class="row">
                             <div class="col-md mb-3">
+                                <label>Password</label>
                                 <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="col-md mb-3">
+                                <label>Confirm Password</label>
                                 <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
                             </div>
                         </div>
@@ -95,6 +102,7 @@
                         @csrf
                         <input type="hidden" name="user_id" id="edit_user_id">
                         <div class="col-md mb-3">
+                            <label>Role</label>
                             <select name="role_id" id="edit_role_id" class="form-control" required>
                                 <option value="">Select Role</option>
                                 @foreach($roles as $role)
@@ -103,22 +111,28 @@
                             </select>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Name</label>
                             <input type="text" name="name" id="edit_name" class="form-control" placeholder="Name" required>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Phone No.</label>
                             <input type="text" name="phone_no"  id="edit_phone_no" class="form-control" placeholder="Phone No" required>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Address</label>
                             <textarea name="address" id="edit_address" class="form-control" placeholder="Address" required></textarea>
                         </div>
                         <div class="col-md mb-3">
+                            <label>Email</label>
                             <input type="email" name="email" id="edit_email" class="form-control" placeholder="Email" required>
                         </div>
                         <div class="row">
                             <div class="col-md mb-3">
+                                <label>Password</label>
                                 <input type="password" name="password" id="edit_password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="col-md mb-3">
+                                <label>Confirm Password</label>
                                 <input type="password" name="password_confirmation" id="edit_password_confirmation" class="form-control" placeholder="Confirm Password" required>
                             </div>
                         </div>
@@ -148,4 +162,4 @@
     <script src="{{ asset('js/profile_patient_management.js') }}"></script>
     @endpush
 
-</x-layouts.app>
+</x-layouts.app> 

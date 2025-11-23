@@ -7,17 +7,15 @@ use Illuminate\Http\Request;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         // User must be logged in
         if (!auth()->check()) {
             abort(403, 'Unauthorized');
         }
 
-        // Support multiple roles: "admin, doctor, patient"
-        $roleArray = explode(',', $role);
-
-        foreach ($roleArray as $role) {
+        // dd($roles); // This always return admin why ?
+        foreach ($roles as $role) {
             if (auth()->user()->hasRole(trim($role))) {
                 return $next($request);
             }

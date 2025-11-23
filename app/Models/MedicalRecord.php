@@ -28,4 +28,10 @@ class MedicalRecord extends Model
     {
         return $this->belongsTo(Patients::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
 }

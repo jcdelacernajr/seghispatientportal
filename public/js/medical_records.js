@@ -39,4 +39,133 @@ document.addEventListener("DOMContentLoaded", function () {
     ['startDate', 'endDate', 'recordTypeFilter'].forEach(id => {
         document.getElementById(id)?.addEventListener('change', () => table.ajax.reload());
     });
+
+    const addModal = new bootstrap.Modal(document.getElementById('addMedicalRecordModal'));
+    const btnAddMedicalRecord = document.getElementById('btnAddMedicalRecord');
+    if(btnAddMedicalRecord) {
+        btnAddMedicalRecord.addEventListener('click', () => {
+            clearForm();
+            addModal.show();
+        });
+    }
+
+    ajaxFormSubmit(
+        "#addMedicalRecorForm",
+        medicalRecordsRoutes.store,
+        "POST",
+        function (response) {
+            addModal.hide();
+            table.ajax.reload();
+
+            const successDiv = document.getElementById('medicalrecordSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
+        },
+        function (error) {  
+            const errorDiv = document.getElementById('medicalrecordErrorMsg');
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = error;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+                errorDiv.innerText = '';
+            }, 3000);
+        }
+    );
+    
+    const editModal = new bootstrap.Modal(document.getElementById('editMedicalRecordModal'));
+
+    document.querySelector('#patienMedicalRecordsTable tbody').addEventListener('click', function(e){
+        if(e.target && e.target.matches('.editMedicalRecord')){
+            let userId = e.target.getAttribute('data-id');
+            axios.get(medicalRecordsRoutes.show.replace(':id', userId))
+                .then(res => {
+                    const medicalRecord = res.data;
+                    document.getElementById('edit_medical_record_id').value = medicalRecord.id; 
+                    document.getElementById('edit_patient_id').value = medicalRecord.patient_id;
+                    document.getElementById('edit_record_type').value = medicalRecord.record_type;
+                    document.getElementById('edit_description').value = medicalRecord.description;
+                    document.getElementById('edit_record_date').value = medicalRecord.record_date;
+
+                    editModal.show();
+                });
+        }
+    });
+
+    ajaxFormSubmit(
+        "#editMedicalRecorForm",
+        medicalRecordsRoutes.update,
+        "POST",
+        function (response) {
+            editModal.hide();
+            table.ajax.reload();
+
+            const successDiv = document.getElementById('medicalrecordSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
+        },
+        function (error) {  
+            const errorDiv = document.getElementById('medicalrecordErrorMsg');
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = error;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+                errorDiv.innerText = '';
+            }, 3000);
+        }
+    );
+
+    deleteRow(
+        '#patienMedicalRecordsTable', 
+        medicalRecordsRoutes.delete,
+        function(response){
+            table.ajax.reload();
+
+            const successDiv = document.getElementById('medicalrecordSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
+
+        },
+        function(errorMsg){
+            alert(errorMsg);
+        }
+    );
+    
+
+    const pdfModal = new bootstrap.Modal(document.getElementById('pdfModal'));
+
+    document.querySelector('#patienMedicalRecordsTable tbody').addEventListener('click', function(e){
+        if(e.target && e.target.matches('.viewPdfBtn')){
+            let pdfUrl = e.target.getAttribute('data-pdf');
+            // console.log("PDF URL:", pdfUrl)
+            $('#pdfFrame').attr('src', pdfUrl);
+            pdfModal.show();
+        }
+    });
+
 });
+
+function clearForm() {
+   // TODO
+}

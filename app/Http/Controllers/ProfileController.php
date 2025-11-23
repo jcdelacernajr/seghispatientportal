@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -14,23 +15,48 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            // Get user roles
+            $isAdminOrDoctor = $user->hasAnyRole(['admin', 'doctor']);
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
-        ]);
+            // Validation rules
+            $rules = [
+                'email' => 'required|email|max:50|unique:users,email,' . $user->id,
+                'password' => 'nullable|min:6|confirmed',
+            ];
 
-       // $user->update($request->only('name', 'email', 'phone', 'address'));
+            // Only require 'name' if user is NOT admin or doctor (i.e., is patient)
+            if (!$isAdminOrDoctor) {
+                $rules['name'] = 'required|string|max:50';
+            }
 
-        // Return JSON response for AJAX
-        return response()->json(['message' => 'Profile updated successfully!']);
-    }
+            // Validate the input data
+            $request->validate($rules);
 
-    public function edit()
-    {
-       
+            $user->email = $request->email;
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            // Save the user record
+            $user->save();
+
+            // TODO 
+            // Only update patient info if the user has a patient record
+            if (!$isAdminOrDoctor && $user->patient) {
+                $patient = $user->patient;
+                $patient->name = $request->name;
+                $patient->email = $request->email;
+                $patient->save();
+            }
+
+            return response()->json(['message' => 'Profile updated successfully!']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update profile record.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

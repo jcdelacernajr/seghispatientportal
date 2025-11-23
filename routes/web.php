@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\MedicalRecords;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\MedicalRecordsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilePatientManagementController;
@@ -40,8 +40,15 @@ Route::middleware('guest')->group(function () {
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])->name('notifications.mark-read');
+
     Route::get('/medical-records', [MedicalRecordsController::class, 'index'])->name('medical-records');
     Route::get('/medical-records/list', [MedicalRecordsController::class, 'list'])->name('medical-records.list');
+    Route::post('/medical-records/store', [MedicalRecordsController::class, 'store'])->name('medical-records.store');
+    Route::get('/medical-records/{id}', [MedicalRecordsController::class, 'show'])->name('medical-records.show');
+    Route::post('/medical-records/update', [MedicalRecordsController::class, 'update'])->name('medical-records.update');
+    Route::delete('/medical-records/delete/{id}', [MedicalRecordsController::class, 'delete'])->name('medical-records.delete');
 
     Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments');
     Route::get('/appointments/list', [AppointmentsController::class, 'list'])->name('appointments.list');
@@ -53,8 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/appointments/confirm/{id}', [AppointmentsController::class, 'confirm'])->name('appointments.confirm');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
 
      // Profile-management only for admin and doctor

@@ -11,26 +11,39 @@ document.addEventListener('DOMContentLoaded', () => {
             { data: "status", name: "status" },
             {
                 data: "action",
-                name: "action",
+                name: "action", 
                 orderable: false,
                 searchable: false,
             },
         ]
     );
 
-    const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal'));
-    document.getElementById('btnAddAppointment').addEventListener('click', () => {
-        clearForm();
-        modal.show();
-    });
+    const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal')); 
+    const btnAddAppointment = document.getElementById('btnAddAppointment');
+    if(btnAddAppointment) {
+        btnAddAppointment.addEventListener('click', () => {
+            clearForm();
+            modal.show();
+        });
+    }
 
     ajaxFormSubmit(
         "#addAppointmentForm",
-        appointmentRoutes.store,
+        appointmentRoutes.store, 
         "POST",
         function (response) {
             modal.hide();
             table.ajax.reload();
+
+            const successDiv = document.getElementById('appointmentSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
         },
         function (error) {  
             const errorDiv = document.getElementById('appointmentErrorMsg');
@@ -71,6 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
         function (response) {
             editModal.hide();
             table.ajax.reload();
+
+            const successDiv = document.getElementById('appointmentSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
         },
         function (error) {  
             const errorDiv = document.getElementById('editAppointmentErrorMsg');
@@ -88,8 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteRow(
         '#appointmentsTable', 
         appointmentRoutes.delete,
-        function(data){
+        function(response){
             table.ajax.reload();
+
+            const successDiv = document.getElementById('appointmentSuccessMsg');
+            successDiv.classList.remove('d-none');
+            successDiv.innerHTML = response.message;
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+                successDiv.innerText = '';
+            }, 3000);
+
         },
         function(errorMsg){
             alert(errorMsg);
@@ -98,35 +132,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#appointmentsTable tbody').addEventListener('click', function(e){
         if(e.target && e.target.matches('.cancelAppointment')){
-            let userId = e.target.getAttribute('data-id');
-            axios.post(appointmentRoutes.cancel.replace(':id', userId), {
-                _method: 'PUT'
-            })
-            .then(response => {
-                alert(response.data.message);
-                table.ajax.reload();
-            })
-            .catch(error => {
-                console.error(error);
-                alert('Failed to cancel appointment.');
-            });
+
+            if (confirm('Are you sure you want to Cancel your appointment?')) {
+                let userId = e.target.getAttribute('data-id');
+                axios.post(appointmentRoutes.cancel.replace(':id', userId), {
+                    _method: 'PUT'
+                })
+                .then(response => {
+                    // alert(response.data.message);
+                    table.ajax.reload();
+
+                    const successDiv = document.getElementById('appointmentSuccessMsg');
+                    successDiv.classList.remove('d-none');
+                    successDiv.innerHTML = response.data.message;
+
+                    // Fade out after 3 seconds
+                    setTimeout(() => {
+                        successDiv.classList.add('d-none');
+                        successDiv.innerText = '';
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Failed to cancel appointment.');
+                });
+            }
         }
     });
 
     document.querySelector('#appointmentsTable tbody').addEventListener('click', function(e){
         if(e.target && e.target.matches('.confirmAppointment')){
-            let userId = e.target.getAttribute('data-id');
-            axios.post(appointmentRoutes.confirm.replace(':id', userId), {
-                _method: 'PUT'
-            })
-            .then(response => {
-                alert(response.data.message);
-                table.ajax.reload();
-            })
-            .catch(error => {
-                console.error(error);
-                alert('Failed to confirm appointment.');
-            });
+            if (confirm('Are you sure you want to Confirm this appointment?')) {
+                let userId = e.target.getAttribute('data-id');
+                axios.post(appointmentRoutes.confirm.replace(':id', userId), {
+                    _method: 'PUT'
+                })
+                .then(response => {
+                    //alert(response.data.message);
+                    table.ajax.reload();
+
+                    const successDiv = document.getElementById('appointmentSuccessMsg');
+                    successDiv.classList.remove('d-none');
+                    successDiv.innerHTML = response.data.message;
+
+                    // Fade out after 3 seconds
+                    setTimeout(() => {
+                        successDiv.classList.add('d-none');
+                        successDiv.innerText = '';
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Failed to confirm appointment.');
+                });
+            }
         }
     });
 

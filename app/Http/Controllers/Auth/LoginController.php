@@ -26,11 +26,11 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             return redirect()->intended(route('dashboard'))
-                ->with('success', 'Welcome back!');
+                ->with('success', 'Welcome!');
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials are incorrect.',
-        ])->onlyInput('email');
+        ])->onlyInput('email'); // Repopulates email only
     }
 }

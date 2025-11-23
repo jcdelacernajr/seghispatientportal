@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ $title ?? 'Auth System' }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> {{-- For AJAX --}}
 </head>
 <body class="bg-light">
@@ -19,25 +20,41 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     @if(auth()->check() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('doctor')))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('profile-patient-management') }}">
+                            <a class="nav-link {{ request()->routeIs('profile-patient-management') ? 'active' : '' }}" 
+                            href="{{ route('profile-patient-management') }}">
                                 Profile Patient Management
                             </a>
                         </li>
                     @endif
 
-                    <li class="nav-item"><a class="nav-link" href="{{ route('medical-records') }}">Medical Records</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('appointments') }}">Appointments</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('medical-records') ? 'active' : '' }}" 
+                        href="{{ route('medical-records') }}">
+                        Medical Records
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('appointments') ? 'active' : '' }}" 
+                        href="{{ route('appointments') }}">
+                        Appointments
+                        </a>
+                    </li>
                 </ul>
 
                 {{-- Right side links --}}
                 <ul class="navbar-nav">
                     @if(auth()->check())
-                        <li class="nav-item"><a class="nav-link" href="{{ route('profile') }}">Profile</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}" 
+                            href="{{ route('profile') }}">
+                            Profile
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
@@ -45,8 +62,18 @@
                             </form>
                         </li>
                     @else
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}" 
+                            href="{{ route('login') }}">
+                            Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}" 
+                            href="{{ route('register') }}">
+                            Register
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </div>
