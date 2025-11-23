@@ -38,6 +38,8 @@ class AppointmentsController extends Controller
             ->addColumn('status', function ($appt) {
                 $statusText = ucfirst($appt->status);
                 $buttons = '';
+
+                /** @var \App\Models\User $user */
                 $user = auth()->user();
 
                 if ($appt->status === 'Pending' && $user->hasAnyRole(['admin', 'doctor'])) {
