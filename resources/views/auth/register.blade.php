@@ -7,21 +7,21 @@
                 @csrf
                 <div class="mb-3">
                     <label>Name</label>
-                    <input type="text" name="name" class="form-control" required>
+                    <input type="text" name="name" class="form-control" placeholder="Name" required>
                 </div>
                 <div class="mb-3">
                     <label>Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-control" required>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email" required>
                 </div>
 
                 <div class="mb-3">
                     <label>Password</label>
-                    <input type="password" name="password" class="form-control" required>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
 
                 <div class="mb-3">
                     <label>Confirm Password</label> 
-                    <input type="password" name="password_confirmation" class="form-control" required>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
                 </div>
 
                 <button class="btn btn-primary w-100">Register</button>

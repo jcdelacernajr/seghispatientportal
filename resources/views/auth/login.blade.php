@@ -7,12 +7,12 @@
                 @csrf
                 <div class="mb-3">
                     <label>Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-control" required autofocus>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email" required autofocus>
                 </div>
 
                 <div class="mb-3">
                     <label>Password</label>
-                    <input type="password" name="password" class="form-control" required>
+                    <input type="password" name="password" class="form-control" placeholder="Passwrod" required>
                 </div>
 
                 <div class="mb-3 form-check">
