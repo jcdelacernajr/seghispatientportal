@@ -15,4 +15,9 @@ class RoleRepository
     {
         return Role::all();
     }
+
+    public function getByName(string $name)
+    {
+        return Role::where('name', $name)->first();
+    }
 }

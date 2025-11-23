@@ -44,4 +44,9 @@ class UserRepository
             $q->where('name', 'Patient');
         })->with('patient')->get();
     }
+
+    public function attachRole(User $user, int $roleId)
+    {
+        $user->roles()->attach($roleId);
+    }
 }
