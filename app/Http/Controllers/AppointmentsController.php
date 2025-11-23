@@ -25,7 +25,7 @@ class AppointmentsController extends Controller
         return view('app.appointments.appointments');
     }
 
-    public function list()
+    public function list(Request $request)
     {
         $appointments = $this->service->listAppointments();
 
@@ -39,7 +39,7 @@ class AppointmentsController extends Controller
                 $statusText = ucfirst($appt->status);
                 $buttons = '';
 
-                /** @var \App\Models\User $user */
+                /** @var \App\Models\User $user */ 
                 $user = auth()->user();
 
                 if ($appt->status === 'Pending' && $user->hasAnyRole(['admin', 'doctor'])) {
@@ -67,13 +67,23 @@ class AppointmentsController extends Controller
                     ';
                 }
             })
-            ->filter(function ($query) {
+            ->filter(function ($query) use ($request) {
                 if ($search = request('search')['value'] ?? false) {
                     $query->where(function ($q) use ($search) {
                         $q->where('title', 'like', "%{$search}%")
                             ->orWhere('notes', 'like', "%{$search}%")
                             ->orWhere('status', 'like', "%{$search}%");
                     });
+                }
+                // Date range filter
+                if ($start = $request->input('start_date')) {
+                    $query->whereDate('appointment_date', '>=', $start);
+                }
+                if ($end = $request->input('end_date')) {
+                    $query->whereDate('appointment_date', '<=', $end);
+                }
+                if ($recordType = $request->input('status')) {
+                    $query->where('status', $recordType);
                 }
             })
             ->rawColumns(['status', 'action'])
