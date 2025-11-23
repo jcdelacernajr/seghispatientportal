@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Patients;
 
-/**
- * Model representing a medical record.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class MedicalRecord extends Model
 {
     use HasFactory;

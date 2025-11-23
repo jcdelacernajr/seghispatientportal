@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\AppointmentService;
 
-/**
- * Controller managing appointments.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class AppointmentsController extends Controller
 {
     protected $service;

@@ -5,11 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Model representing a file associated with a medical record.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class File extends Model
 {
     use HasFactory;

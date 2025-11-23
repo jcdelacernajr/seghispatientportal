@@ -5,11 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-/**
- * Middleware to check user roles.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, ...$roles)

@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-/**
- * Controller managing user profiles.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class ProfileController extends Controller
 {
     public function index()
@@ -47,6 +42,7 @@ class ProfileController extends Controller
             // Save the user record
             $user->save();
 
+            // TODO 
             // Only update patient info if the user has a patient record
             if (!$isAdminOrDoctor && $user->patient) {
                 $patient = $user->patient;

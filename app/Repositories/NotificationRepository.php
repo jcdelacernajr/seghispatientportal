@@ -4,11 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Notification;
 
-/**
- *  Repository for managing notifications.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class NotificationRepository
 {
     public function getUnreadNotificationsForPatient($patientId)

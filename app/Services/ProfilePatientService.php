@@ -7,11 +7,6 @@ use App\Repositories\PatientRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-/**
- *  Service for managing patient profiles.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class ProfilePatientService
 {
     protected $userRepo;

@@ -5,11 +5,6 @@ namespace App\Services;
 use App\Repositories\AppointmentRepository;
 use App\Repositories\NotificationRepository;
 
-/**
- *  Service for managing dashboard data.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class DashboardService
 {
     protected $appointments;

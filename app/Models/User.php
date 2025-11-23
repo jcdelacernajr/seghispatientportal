@@ -9,11 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
 
-/**
- * Model representing a user.
- * 
- * @update 11/17/2025 Juanito Jr. Chavez Dela Cerna
- */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;

@@ -8,11 +8,6 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Services\DashboardService;
 
-/**
- * Controller for the user dashboard.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class DashboardController extends Controller
 {
     protected $dashboard;

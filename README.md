@@ -64,3 +64,15 @@ This application separates responsibilities into layers:
 3. `DashboardService` fetches data from `AppointmentRepository` and `NotificationRepository`.  
 4. The controller returns a Blade view with the formatted data.
 
+---
+
+## 🔧 Installation
+
+```bash
+git clone <repository-url>
+cd project-folder
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve

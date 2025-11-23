@@ -7,11 +7,6 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Repositories\RoleRepository;
 use App\Services\ProfilePatientService;
 
-/**
- * Controller managing patient profiles.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class ProfilePatientManagementController extends Controller
 {
     protected $roleRepo;

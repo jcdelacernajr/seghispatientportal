@@ -5,11 +5,6 @@ namespace App\Repositories;
 use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\Storage;
 
-/**
- *  Repository for managing medical records.
- * 
- * @author Juanito Jr. Chavez Dela Cerna
- */
 class MedicalRecordRepository
 {
     public function create(array $data)

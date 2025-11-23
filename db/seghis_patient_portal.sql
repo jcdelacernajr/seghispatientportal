@@ -12,7 +12,7 @@ MySQL - 11.7.2-MariaDB : Database - seghis_patient_portal
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
--- CREATE DATABASE /*!32312 IF NOT EXISTS*/`seghis_patient_portal` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`seghis_patient_portal` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
 
 USE `seghis_patient_portal`;
 
