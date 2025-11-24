@@ -1,6 +1,6 @@
 ## SEGHIS PATIENT PORTAL
 
-This Laravel application follows **MVC + [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) principles**, separating concerns into **Controllers**, **Services**, and **Repositories**. This ensures the codebase is modular, maintainable, and testable.
+This Laravel application follows **[MVC](https://laravel.com/learn/getting-started-with-laravel/what-is-mvc) + [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) principles**, separating concerns into **Controllers**, **Services**, and **Repositories**. This ensures the codebase is modular, maintainable, and testable.
 
 ---
 ## Requirements
