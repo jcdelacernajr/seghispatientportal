@@ -19,8 +19,9 @@
                     <input type="checkbox" name="remember" class="form-check-input" id="remember">
                     <label for="remember" class="form-check-label">Remember Me</label>
                 </div>
-
-                <button class="btn btn-primary w-100">Login</button>
+                <div class="mb-3 d-flex flex-column align-items-end">
+                    <button class="btn btn-primary">Login</button>
+                </div>
             </form>
 
             <div class="mt-3 text-center">
