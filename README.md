@@ -65,4 +65,7 @@ This application separates responsibilities into layers:
 4. The controller returns a Blade view with the formatted data.
 
 ## 🌐 LIVE DEMO
+
 [Seghis Patient Portal](https://seghispatientportal.onrender.com)
+
+> ⚠️ **Heads up:** The app is running on a free-tier hosting service, so it may load slowly.
