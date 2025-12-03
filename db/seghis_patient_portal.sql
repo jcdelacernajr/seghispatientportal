@@ -12,6 +12,7 @@ MySQL - 11.7.2-MariaDB : Database - seghis_patient_portal
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`seghis_patient_portal` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
 
 USE `seghis_patient_portal`;
 
@@ -55,10 +56,6 @@ insert  into `appointments`(`id`,`user_id`,`title`,`appointment_date`,`appointme
 (20,38,'Laboratory','2025-11-18','16:43:00','asdsad','Confirmed','2025-11-18 08:39:46','2025-11-18 21:24:13'),
 (22,38,'Medical Exam','2025-11-12','08:50:00','Edit Appointment','Pending','2025-11-18 19:45:08','2025-11-19 05:11:57'),
 (26,24,'Medical Exam','2025-11-24','08:30:00','Your notes','Pending','2025-11-19 03:37:27','2025-11-19 03:38:47'),
-(28,46,'Medical Exam','2025-11-20','08:20:00','Notes','Pending','2025-11-19 05:18:15','2025-11-19 05:20:26'),
-(34,46,'Check up','2025-11-29','13:54:00','Cancel','Pending','2025-11-19 05:51:02','2025-11-19 05:53:04'),
-(36,46,'test','2025-11-21','09:33:00','teset atasdfg saddsadgasgasdfg  agadf','Pending','2025-11-19 09:29:55','2025-11-19 09:30:13'),
-(42,46,'test','2025-11-27','10:30:00','test test','Confirmed','2025-11-23 12:29:52','2025-11-24 02:37:33'),
 (46,49,'TEST TWO','2025-11-24','08:30:00','TEST','Confirmed','2025-11-23 13:10:34','2025-11-23 13:10:34'),
 (48,53,'Medical Exam','2025-11-29','10:30:00','Test test','Confirmed','2025-11-24 02:25:55','2025-11-24 02:29:41');
 
@@ -362,7 +359,6 @@ insert  into `user_role`(`id`,`user_id`,`role_id`) values
 (38,38,3),
 (44,43,2),
 (45,44,1),
-(48,46,3),
 (51,49,3),
 (55,53,3);
 
@@ -398,7 +394,6 @@ insert  into `users`(`id`,`email`,`email_verified_at`,`password`,`remember_token
 (38,'lab123@gmail.com',NULL,'$2y$10$LxUYGwzj/UZVAlbl7H5tTetkTLttYziOf3tP/74PP8avyy7PTrqL2',NULL,'2025-11-17 15:24:51','2025-11-19 05:55:24'),
 (43,'doctoruser@gmail.com',NULL,'$2y$10$xYhQdeKdWcoOXYTjvxpib.aLus5QmtcF9QUuWlU.btED2fhxzb0fC',NULL,'2025-11-19 02:51:00','2025-11-19 02:51:00'),
 (44,'seghisadmin@gmail.com',NULL,'$2y$10$qEb1Z.8m05mGKaZ8tFJNx.fSWBjOEgWyHztyhKqB517m7Flc1W6/e','BU1MGpPMdxKcm8iHWeL7KFuGmappOt7DbIkB5wufyoPytGdIEX4ZxCyYjYA1','2025-11-19 02:52:17','2025-11-20 05:33:47'),
-(46,'lab@gmail.com',NULL,'$2y$10$.7IBESxmz4LQrVM28.Ouk.S5knkLvtgYfgN5kPiz4pEY23k1ePbeC',NULL,'2025-11-19 05:17:32','2025-11-23 11:53:05'),
 (49,'testname@gmail.com',NULL,'$2y$10$e0tdTV4DJtZZLgNY0zygjeqqJB9P8AlwwQXms7m0gJ3wY0lyKNM7G',NULL,'2025-11-23 11:55:15','2025-11-23 22:40:30'),
 (53,'patientname@gmail.com',NULL,'$2y$10$gmpBQxicXoWqYkcfonDSZegr1GU3WWUNJ83UXluSuTXue3DLpMFsC',NULL,'2025-11-24 02:22:39','2025-11-24 02:30:39');
 
