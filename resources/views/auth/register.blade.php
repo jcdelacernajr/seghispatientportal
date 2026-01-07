@@ -7,7 +7,7 @@
                 @csrf
                 <div class="mb-3">
                     <label>Name</label>
-                    <input type="text" name="name" class="form-control" placeholder="Name" required>
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Name" required>
                 </div>
                 <div class="mb-3">
                     <label>Email</label>
@@ -15,7 +15,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Password</label>
+                    <label>Password 
+                         <span 
+                            class="bi bi-info-circle" 
+                            data-bs-toggle="tooltip" 
+                            title="Must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character."
+                            style="cursor: pointer; color: #0d6efd;" >
+                      </span>
+                    </label>
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
 
@@ -24,7 +31,9 @@
                     <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
                 </div>
 
-                <button class="btn btn-primary w-100">Register</button>
+                <div class="mb-3 d-flex flex-column align-items-end">
+                    <button class="btn btn-primary">Register</button>
+                </div>
             </form>
 
             <div class="mt-3 text-center">
